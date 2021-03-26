@@ -1,0 +1,63 @@
+# Order
+
+schema {
+    query:Query,
+    mutation:Mutation
+}
+
+
+
+type OrderDto {
+    id: ID!
+    totalPrice: Int!
+    createdAt: String!
+    deliverDate:String!
+    productDtos: [ProductDto!]
+}
+
+input OrderInput {
+    id: ID!
+    totalPrice: Int!
+    createdAt: String!
+    deliverDate:String!
+    productDtos: [ProductInput!]
+}
+
+
+# Product
+
+type ProductDto {
+    id: ID!
+    name: String!
+    price: Int!
+    description: String
+    amount: Int!
+
+}
+
+input ProductInput {
+    id: ID!
+    name: String!
+    price: Int!
+    description: String
+    amount: Int!
+
+}
+
+# ---
+
+type Query {
+    getAllOrders:[OrderDto!]!
+    getOrderById(orderId:ID!): OrderDto
+
+}
+
+# ---
+
+type Mutation {
+    createOrder(orderInput:OrderInput!): OrderDto!
+    updateOrder(orderInput:OrderInput!): OrderDto!
+    deleteOrder(orderId:ID!): OrderDto!
+
+    addOrderProduct(orderId:ID!, productInput: ProductInput): OrderDto!
+}
