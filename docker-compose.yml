@@ -1,0 +1,61 @@
+version: "3"
+services: 
+  catalog-service: 
+      container_name: docker-catalogservice
+      depends_on: 
+        - mysql-service
+      environment: 
+        WAIT_HOSTS: "mysql:3306"
+      image: catalogservice
+      ports: 
+        - "10555:9000"
+      restart: on-failure
+      networks:
+        - networkIdruide
+  mysql-service: 
+      container_name: docker-mysql
+      environment: 
+        MYSQL_DABATASE: idrivedb
+        MYSQL_ROOT_HOST: "%"
+        MYSQL_ROOT_PASSWORD: admin
+      healthcheck: 
+        interval: 4s
+        retries: 5
+        test: "/usr/bin/mysql --user=root --password=admin --execute \\\"SHOW DATABASES\" "
+        timeout: 20s
+      image: mysql
+      ports: 
+        - "6666:3306"
+      restart: always
+      volumes: 
+        - "./sql:/docker-entrypoint-initdb.d"
+      networks:
+        networkIdruide:
+          aliases:
+           - mysql-service
+  order-service: 
+     container_name: docker-orderservice
+     environment: 
+       WAIT_HOSTS: "mysql:3306"
+     depends_on: 
+         - mysql-service
+     image: orderservice
+     ports: 
+       - "10444:8000"
+     restart: on-failure
+     networks:
+       - networkIdruide
+  packing-service: 
+    container_name: docker-packingservice
+    environment: 
+      WAIT_HOSTS: "mysql:3306"
+    depends_on: 
+        - mysql-service 
+    image: packingservice
+    ports: 
+      - "10333:7000"
+    restart: on-failure
+    networks:
+      - networkIdruide
+networks:
+      networkIdruide:  

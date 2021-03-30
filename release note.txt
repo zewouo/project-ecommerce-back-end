@@ -1,0 +1,25 @@
+
+To deploy application follow step belows:
+
+docker network create networkIdruide
+
+
+0-create db image
+
+
+1-Creation  of image services
+docker build -f catalogservice/Dockerfile -t catalogservice .
+docker build -f orderservice/Dockerfile -t orderservice .
+docker build -f packingservice/Dockerfile -t packingservice .
+
+--spring.profiles.active=docker
+
+2-lauch docker compose on top of folder
+docker-compose up
+
+
+
+
+
+
+
