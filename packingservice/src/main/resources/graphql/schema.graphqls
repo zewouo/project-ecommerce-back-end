@@ -10,15 +10,15 @@ type PackingDto {
     deliverDate:String!
     comment:String!
     createdAt:String!
-    orderDto:OrderDto!
+    orderId:Int!
 }
-input PackingInput {
-    id:ID!
+input PackingInput  {
+
     code:String!
     deliverDate:String!
     comment:String!
     createdAt:String!
-    orderInput:OrderInput!
+    orderId:Int!
 
 }
 
@@ -26,27 +26,23 @@ input PackingInput {
 type OrderDto {
     id: ID!
     totalPrice: Int!
+    costumerName: String!
+    shipped: Boolean!
     createdAt: String!
     deliverDate:String!
+    address: String!
 }
-input  OrderInput {
-    id: ID!
-    totalPrice: Int!
-    createdAt: String!
-    deliverDate:String!
-}
-
 
 # ---Query
 type Query {
     getAllPackings: [PackingDto!]!
-    getPackingById(packingId:ID!): PackingDto
+    getPackingById(packingId:ID!): PackingDto!
 }
 
 # ---Mutation
 type Mutation {
     createPacking(packingInput:PackingInput!): PackingDto!
-    updatePacking(packingInput:PackingInput!): PackingDto!
+    updatePacking(packingInput:PackingInput): PackingDto!
     deletePacking(packingId:ID!): PackingDto!
-    addPackingOrder(orderId:ID!,packingInput:PackingInput!): PackingDto!
+    addPackingOrder(packingId:ID!,orderInput:ID!): PackingDto!
 }

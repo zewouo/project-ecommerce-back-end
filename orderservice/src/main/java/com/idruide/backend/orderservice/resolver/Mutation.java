@@ -2,13 +2,12 @@ package com.idruide.backend.orderservice.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.idruide.backend.orderservice.dto.OrderDto;
-import com.idruide.backend.orderservice.dto.ProductDto;
 import com.idruide.backend.orderservice.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -17,35 +16,38 @@ import java.util.List;
  */
 
 @Component
+@Slf4j
 public class Mutation implements GraphQLMutationResolver {
 
-    @Autowired
+    Logger logger = LoggerFactory.getLogger(Mutation.class);
+
     private OrderService orderService;
 
-    public OrderDto createOrder(OrderDto orderDto) { return orderService.saveOrder(orderDto); }
+    @Autowired
+    public Mutation(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    public OrderDto createOrder(OrderDto orderDto) {
+        log.info("Create Order with ID " + orderDto.getId() + " in Order service");
+        return orderService.saveOrder(orderDto);
+    }
 
     public OrderDto updateOrder(OrderDto orderDto) {
+        log.info("Update Order with ID " + orderDto.getId() + " in Order service");
         return orderService.saveOrder(orderDto);
     }
 
     public OrderDto deleteOrder(Integer orderId) {
         OrderDto orderDto = orderService.validateAndGetOrderById(orderId);
+        log.info("Delete Order with ID " + orderId + " in Order service");
         orderService.deleteOrder(orderDto);
         return orderDto;
     }
 
-    public OrderDto addOrderProduct(Integer orderId, ProductDto productDto) {
-        OrderDto orderDto = orderService.validateAndGetOrderById(orderId);
-        List<ProductDto> listProducts  = orderDto.getProductDtos();
-        if ((listProducts != null) && !listProducts.isEmpty())
-       {
-           listProducts.add(productDto);
-        } else{
-            listProducts = new ArrayList<>();
-           listProducts.add(productDto);
-           orderDto.setProductDtos(listProducts);
-       }
-        return orderService.saveOrderProduct(orderDto);
+    public OrderDto addOrderProduct(Integer orderId, Integer productId) {
+        log.info("Add product to  Order with orderId " + orderId + "and productId " + productId + " in Order service");
+        return orderService.updateOrder(orderId, productId);
     }
 
 

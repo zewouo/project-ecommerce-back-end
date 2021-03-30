@@ -1,6 +1,5 @@
-package com.idruide.backend.orderservice.dto;
+package com.idruide.backend.catalogservice.input;
 
-import com.idruide.backend.orderservice.entities.Order;
 import lombok.Data;
 
 /**
@@ -8,13 +7,13 @@ import lombok.Data;
  *
  * @author Thierry Kwekam
  */
+
 @Data
-public class ProductDto {
+public class ProductInput {
 
     private Integer id;
     private String name;
     private Integer price;
     private String description;
     private Integer amount;
-    private Order order;
 }

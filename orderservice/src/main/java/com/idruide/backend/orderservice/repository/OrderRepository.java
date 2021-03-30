@@ -1,6 +1,6 @@
 package com.idruide.backend.orderservice.repository;
 
-import com.idruide.backend.orderservice.entities.OrderCo;
+import com.idruide.backend.orderservice.entities.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Thierry Kwekam
  */
-public interface OrderRepository extends JpaRepository<OrderCo, Integer> {
+public interface OrderRepository extends JpaRepository<Order, Integer> {
 
 }

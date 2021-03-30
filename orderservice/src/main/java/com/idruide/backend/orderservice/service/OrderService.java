@@ -20,6 +20,8 @@ public interface OrderService {
 
     OrderDto saveOrderProduct(OrderDto orderDto);
 
+    OrderDto updateOrder(Integer orderId, Integer productId);
+
 
     void deleteOrder(OrderDto orderDto);
 

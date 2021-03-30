@@ -1,7 +1,7 @@
 package com.idruide.backend.orderservice.mapper;
 
 import com.idruide.backend.orderservice.dto.OrderDto;
-import com.idruide.backend.orderservice.entities.OrderCo;
+import com.idruide.backend.orderservice.entities.Order;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -15,24 +15,24 @@ import java.util.stream.Stream;
  * @author Thierry Kwekam
  */
 
-@Mapper(builder = @Builder(disableBuilder = true),
-        uses = { ProductMapper.class
-        })
+@Mapper(builder = @Builder(disableBuilder = true), uses = { ProductMapper.class})
 public interface OrderMapper {
 
-    @Mapping(source ="orderDto.productDtos", target = "products", qualifiedByName="toProducts")
-    @Mapping(source = "orderDto.createdAt", target = "createdAt", dateFormat = "dd-MM-yyyy")
-    @Mapping(source = "orderDto.deliverDate", target = "deliverDate", dateFormat = "dd-MM-yyyy")
-    public OrderCo toOrder(OrderDto orderDto);
 
-    public OrderCo toOrderProduct(OrderDto orderDto);
+    @Mapping(source = "orderDto.createdAt", target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm")
+    @Mapping(source = "orderDto.deliverDate", target = "deliverDate", dateFormat = "dd-MM-yyyy HH:mm")
+    Order toOrder(OrderDto orderDto);
 
-    public OrderCo toOrderDelete(OrderDto orderDto);
+    Order toOrderProduct(OrderDto orderDto);
 
-    public OrderDto toOrderDto(OrderCo orderCo);
+    Order toOrderDelete(OrderDto orderDto);
 
-    default List<OrderDto> toOrdersDto(List<OrderCo> orderCos){
-        return Optional.ofNullable(orderCos)
+    @Mapping(source = "order.products", target = "productIds", qualifiedByName = "toProductIds")
+    OrderDto toOrderDto(Order order);
+
+
+    default List<OrderDto> toOrdersDto(List<Order> orders) {
+        return Optional.ofNullable(orders)
                 .map(List::stream).orElseGet(Stream::empty)
                 .map(this::toOrderDto)
                 .collect(Collectors.toList());

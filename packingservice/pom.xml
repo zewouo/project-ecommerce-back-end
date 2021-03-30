@@ -14,7 +14,7 @@
 	<name>packingservice</name>
 	<description> project  Spring Boot packingservice</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

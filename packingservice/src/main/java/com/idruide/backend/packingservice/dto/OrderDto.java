@@ -1,14 +1,12 @@
-package com.idruide.backend.orderservice.dto;
+package com.idruide.backend.packingservice.dto;
 
 import lombok.Data;
-import lombok.Getter;
-
-import java.util.List;
 
 /**
+ *
+ *
  * @author Thierry Kwekam
  */
-@Getter
 @Data
 public class OrderDto {
 
@@ -19,7 +17,5 @@ public class OrderDto {
     private String createdAt;
     private String deliverDate;
     private String address;
-    private List<Integer> productIds;
-
 
 }

@@ -16,7 +16,7 @@ type ProductDto {
     amount: Int!
 }
 input ProductInput {
-    id: ID!
+
     name: String!
     price: Int!
     description: String

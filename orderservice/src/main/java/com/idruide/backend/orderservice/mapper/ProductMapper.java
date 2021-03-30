@@ -17,23 +17,23 @@ import java.util.stream.Stream;
  * @author Thierry Kwekam
  */
 @Mapper
-
-
 public interface ProductMapper {
 
     Product toProduct(ProductDto productDto);
 
     ProductDto toProductDto(Product product);
 
-    default List<ProductDto> toProductsDto(List<Product> products){
+    @Named("toProductIds")
+    default List<Integer> toProductIds(List<Product> products) {
         return Optional.ofNullable(products)
                 .map(List::stream).orElseGet(Stream::empty)
-                .map(this::toProductDto)
+                .map(Product::getId)
                 .collect(Collectors.toList());
 
     }
+
     @Named("toProducts")
-    default List<Product> toProducts(List<ProductDto> productDtos){
+    default List<Product> toProducts(List<ProductDto> productDtos) {
         return Optional.ofNullable(productDtos)
                 .map(List::stream).orElseGet(Stream::empty)
                 .map(this::toProduct)
