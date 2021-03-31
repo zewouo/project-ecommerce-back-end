@@ -1,0 +1,41 @@
+#@author Thierry Kwekam
+# Product
+
+schema {
+    query:Query,
+    mutation:Mutation
+}
+
+# ---
+
+type ProductDto {
+    id: ID!
+    name: String!
+    price: Int!
+    description: String
+    amount: Int!
+}
+input ProductInput {
+
+    name: String!
+    price: Int!
+    description: String
+    amount: Int!
+}
+
+
+type Query {
+    # Fetch All Products
+    getAllProducts : [ProductDto!]!
+    getProductById(productId: ID!): ProductDto
+    getProductByName(productName: String!): ProductDto
+}
+
+type Mutation {
+    createProduct(productInput: ProductInput!): ProductDto!
+    updateProduct(productInput: ProductInput!): ProductDto!
+    deleteProduct(productId: ID!): ProductDto!
+}
+
+
+

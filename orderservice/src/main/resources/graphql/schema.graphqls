@@ -1,0 +1,46 @@
+#@author Thierry Kwekam
+schema {
+    query:Query,
+    mutation:Mutation
+}
+
+# Order
+type OrderDto {
+    id: ID!
+    totalPrice: Int!
+    costumerName: String!
+    shipped: Boolean!
+    createdAt: String!
+    deliverDate:String!
+    address: String!
+    productIds: [Int!]
+}
+
+input OrderInput {
+
+    totalPrice: Int!
+    costumerName: String!
+    shipped: Boolean!
+    createdAt: String!
+    deliverDate:String!
+    address: String!
+    productIds: [Int!]
+}
+
+
+# ---
+
+type Query {
+    getAllOrders:[OrderDto!]!
+    getOrderById(orderId:ID!): OrderDto
+
+}
+
+# ---
+
+type Mutation {
+    createOrder(orderInput:OrderInput!): OrderDto!
+    updateOrder(orderInput:OrderInput!): OrderDto!
+    deleteOrder(orderId:ID!): OrderDto!
+    addOrderProduct(orderId:ID!, productId: ID!): OrderDto!
+}

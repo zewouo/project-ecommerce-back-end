@@ -1,0 +1,13 @@
+graphql:
+  servlet:
+    mapping: /order
+    enabled: true
+    corsEnabled: true
+
+graphiql:
+  mapping: /graphiql
+  endpoint: /order
+  enabled: true
+  pageTitle: GraphiQL
+  cdn:
+    enabled: false
