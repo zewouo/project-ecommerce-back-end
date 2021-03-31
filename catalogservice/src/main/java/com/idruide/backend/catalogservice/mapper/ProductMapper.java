@@ -1,7 +1,7 @@
 package com.idruide.backend.catalogservice.mapper;
 
 
-import com.idruide.backend.catalogservice.input.ProductInput;
+import com.idruide.backend.catalogservice.dto.ProductInput;
 import com.idruide.backend.catalogservice.entities.Product;
 
 import org.mapstruct.Mapper;

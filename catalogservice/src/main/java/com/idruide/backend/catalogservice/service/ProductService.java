@@ -1,7 +1,7 @@
 package com.idruide.backend.catalogservice.service;
 
 
-import com.idruide.backend.catalogservice.input.ProductInput;
+import com.idruide.backend.catalogservice.dto.ProductInput;
 
 import java.util.List;
 /**

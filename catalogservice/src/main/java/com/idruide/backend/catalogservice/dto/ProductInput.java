@@ -1,4 +1,4 @@
-package com.idruide.backend.catalogservice.input;
+package com.idruide.backend.catalogservice.dto;
 
 import lombok.Data;
 

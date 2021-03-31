@@ -1,8 +1,12 @@
 package com.idruide.backend.orderservice.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.idruide.backend.orderservice.dto.OrderDto;
-import com.idruide.backend.orderservice.service.OrderService;
+import com.idruide.backend.orderservice.service.kafka.KafkaCatalogProducer;
+import com.idruide.backend.orderservice.service.kafka.KafkaPackingProducer;
+import com.idruide.backend.orderservice.service.order.OrderService;
+import com.idruide.backend.orderservice.utils.OrderXmlParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,17 +21,35 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class Mutation implements GraphQLMutationResolver {
 
+    private KafkaPackingProducer packingProducer;
+
+    private KafkaCatalogProducer catalogProducer;
 
     private OrderService orderService;
 
     @Autowired
-    public Mutation(OrderService orderService) {
+    public Mutation(KafkaPackingProducer packingProducer,
+                    KafkaCatalogProducer catalogProducer,
+                    OrderService orderService) {
+        this.packingProducer = packingProducer;
+        this.catalogProducer = catalogProducer;
         this.orderService = orderService;
     }
 
-    public OrderDto createOrder(OrderDto orderDto) {
-        log.info("Create Order with ID " + orderDto.getId() + " in Orderservice");
-        return orderService.saveOrder(orderDto);
+
+    public OrderDto createOrder(OrderDto orderDto) throws JsonProcessingException {
+
+
+        OrderDto order = orderService.saveOrder(orderDto);
+        log.info("Create Order with ID " + order.getId() + " in Orderservice");
+
+        if(order!= null && order.getId()!= null){
+            this.catalogProducer.writeMessage(OrderXmlParser.writeValueAsString(order));
+            this.packingProducer.writeMessage(OrderXmlParser.writeValueAsString(order));
+            System.out.println(OrderXmlParser.writeValueAsString(order));
+        }
+
+        return order;
     }
 
     public OrderDto updateOrder(OrderDto orderDto) {

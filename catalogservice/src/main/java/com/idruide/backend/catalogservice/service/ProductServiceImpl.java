@@ -1,7 +1,7 @@
 package com.idruide.backend.catalogservice.service;
 
 
-import com.idruide.backend.catalogservice.input.ProductInput;
+import com.idruide.backend.catalogservice.dto.ProductInput;
 import com.idruide.backend.catalogservice.exception.ProductNotFoundException;
 import com.idruide.backend.catalogservice.mapper.ProductMapper;
 import com.idruide.backend.catalogservice.repository.ProductRepository;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Service
-public class ProductServiceImpl implements ProductService  {
+public class ProductServiceImpl implements ProductService {
 
 
     private ProductRepository productRepository ;

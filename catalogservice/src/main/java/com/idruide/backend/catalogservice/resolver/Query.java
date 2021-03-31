@@ -3,7 +3,7 @@ package com.idruide.backend.catalogservice.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 
-import com.idruide.backend.catalogservice.input.ProductInput;
+import com.idruide.backend.catalogservice.dto.ProductInput;
 import com.idruide.backend.catalogservice.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
