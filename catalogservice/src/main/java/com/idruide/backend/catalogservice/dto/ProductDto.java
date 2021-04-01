@@ -9,11 +9,12 @@ import lombok.Data;
  */
 
 @Data
-public class ProductInput {
+public class ProductDto {
 
     private Integer id;
     private String name;
     private Integer price;
     private String description;
     private Integer amount;
+    private Boolean available;
 }

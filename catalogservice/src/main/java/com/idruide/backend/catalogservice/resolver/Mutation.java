@@ -1,12 +1,9 @@
 package com.idruide.backend.catalogservice.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-
-import com.idruide.backend.catalogservice.dto.ProductInput;
+import com.idruide.backend.catalogservice.dto.ProductDto;
 import com.idruide.backend.catalogservice.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +17,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class Mutation implements GraphQLMutationResolver {
 
-    Logger logger = LoggerFactory.getLogger(Mutation.class);
-
     private ProductService productService;
 
     @Autowired
@@ -29,21 +24,21 @@ public class Mutation implements GraphQLMutationResolver {
         this.productService = productService;
     }
 
-    public ProductInput createProduct(ProductInput productInput) {
-        log.info("create Product " + productInput.getName() + " in catalog service");
-        return productService.saveProduct(productInput);
+    public ProductDto createProduct(ProductDto productDto) {
+        log.info("create Product " + productDto.getName() + " in catalog service");
+        return productService.saveProduct(productDto);
     }
 
-    public ProductInput updateProduct(ProductInput productInput) {
-        log.info("Update Product " + productInput.getName() + " in catalog service");
-        return productService.saveProduct(productInput);
+    public ProductDto updateProduct(ProductDto productDto) {
+        log.info("Update Product " + productDto.getName() + " in catalog service");
+        return productService.saveProduct(productDto);
     }
 
-    public ProductInput deleteProduct(Integer productId) {
-        ProductInput productInput = productService.validateAndGetProductById(productId);
-        log.info("Delete Product " + productInput.getName() + " in catalog service");
-        productService.deleteProduct(productInput);
-        return productInput;
+    public ProductDto deleteProduct(Integer productId) {
+        ProductDto productDto = productService.validateAndGetProductById(productId);
+        log.info("Delete Product " + productDto.getName() + " in catalog service");
+        productService.deleteProduct(productDto);
+        return productDto;
     }
 
 }

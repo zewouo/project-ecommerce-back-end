@@ -32,8 +32,8 @@ type Query {
 }
 
 type Mutation {
-    createProduct(productInput: ProductInput!): ProductDto!
-    updateProduct(productInput: ProductInput!): ProductDto!
+    createProduct(productDto: ProductInput!): ProductDto!
+    updateProduct(productDto: ProductInput!): ProductDto!
     deleteProduct(productId: ID!): ProductDto!
 }
 

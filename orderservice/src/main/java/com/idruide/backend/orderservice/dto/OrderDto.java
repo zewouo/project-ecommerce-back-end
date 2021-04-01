@@ -15,7 +15,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderDto implements Serializable {
 
+    private Integer id;
+    private String costumerName;
+    private Integer totalPrice;
+    private Boolean shipped;
+    private String createdAt;
+    private String deliverDate;
+    private String address;
     private List<Integer> productIds;
-
 
 }

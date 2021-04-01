@@ -15,7 +15,7 @@ graphiql:
 spring:
   kafka:
     consumer:
-      bootstarp-servers: localhost:2181
+      bootstarp-servers: localhost:9092
       group-id: "packing_consumer"
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer

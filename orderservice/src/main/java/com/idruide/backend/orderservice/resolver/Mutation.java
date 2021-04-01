@@ -38,8 +38,6 @@ public class Mutation implements GraphQLMutationResolver {
 
 
     public OrderDto createOrder(OrderDto orderDto) throws JsonProcessingException {
-
-
         OrderDto order = orderService.saveOrder(orderDto);
         log.info("Create Order with ID " + order.getId() + " in Orderservice");
 

@@ -28,6 +28,8 @@ public interface OrderMapper {
     Order toOrderDelete(OrderDto orderDto);
 
     @Mapping(source = "order.products", target = "productIds", qualifiedByName = "toProductIds")
+    @Mapping(source = "order.createdAt", target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm")
+    @Mapping(source = "order.deliverDate", target = "deliverDate", dateFormat = "dd-MM-yyyy HH:mm")
     OrderDto toOrderDto(Order order);
 
 

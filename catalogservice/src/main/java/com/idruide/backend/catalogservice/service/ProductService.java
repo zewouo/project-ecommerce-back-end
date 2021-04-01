@@ -1,7 +1,7 @@
 package com.idruide.backend.catalogservice.service;
 
 
-import com.idruide.backend.catalogservice.dto.ProductInput;
+import com.idruide.backend.catalogservice.dto.ProductDto;
 
 import java.util.List;
 /**
@@ -13,14 +13,21 @@ import java.util.List;
 public interface ProductService  {
 
 
-        List<ProductInput> getAllProducts();
+        List<ProductDto> getAllProducts();
 
-        ProductInput validateAndGetProductById(Integer id);
+        ProductDto validateAndGetProductById(Integer id);
 
-        ProductInput validateAndGetProductByName(String name);
+        ProductDto validateAndGetProductByName(String name);
 
-        ProductInput saveProduct(ProductInput productInput);
+        ProductDto saveProduct(ProductDto productDto);
 
-        void deleteProduct(ProductInput productInput);
+        void deleteProduct(ProductDto productDto);
+
+        ProductDto updateProduct(Integer id);
+
+       List<ProductDto> updateProduct(List<Integer> productIds);
+
+
+
 
 }

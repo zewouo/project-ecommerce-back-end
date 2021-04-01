@@ -1,7 +1,7 @@
 package com.idruide.backend.catalogservice.mapper;
 
 
-import com.idruide.backend.catalogservice.dto.ProductInput;
+import com.idruide.backend.catalogservice.dto.ProductDto;
 import com.idruide.backend.catalogservice.entities.Product;
 
 import org.mapstruct.Mapper;
@@ -21,11 +21,11 @@ import java.util.stream.Stream;
 @Mapper
 public interface ProductMapper {
 
-     Product toProduct(ProductInput productInput);
+     Product toProduct(ProductDto productDto);
 
-     ProductInput toProductDto(Product product);
+     ProductDto toProductDto(Product product);
 
-     default List<ProductInput> toProductsDto(List<Product> products){
+     default List<ProductDto> toProductsDto(List<Product> products){
          return Optional.ofNullable(products)
                  .map(List::stream).orElseGet(Stream::empty)
                  .map(this::toProductDto)
