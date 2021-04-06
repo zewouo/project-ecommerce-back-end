@@ -17,4 +17,5 @@ public class ProductDto {
     private String description;
     private Integer amount;
     private Boolean available;
+    private Integer quantity;
 }

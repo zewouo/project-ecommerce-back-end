@@ -42,9 +42,9 @@ public class Mutation implements GraphQLMutationResolver {
         log.info("Create Order with ID " + order.getId() + " in Orderservice");
 
         if(order!= null && order.getId()!= null){
-            this.catalogProducer.writeMessage(OrderXmlParser.writeValueAsString(order));
-            this.packingProducer.writeMessage(OrderXmlParser.writeValueAsString(order));
-            System.out.println(OrderXmlParser.writeValueAsString(order));
+            this.catalogProducer.publishToCatalog(OrderXmlParser.writeValueAsString(order));
+            this.packingProducer.publishToPacking(OrderXmlParser.writeValueAsString(order));
+            log.info(" Message send to catalog and packing " + OrderXmlParser.writeValueAsString(order));
         }
 
         return order;

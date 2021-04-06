@@ -12,12 +12,6 @@ graphiql:
   cdn:
     enabled: false
 
-spring:
-  kafka:
-    consumer:
-      group-id: "catalog_consumer"
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    bootstarp-servers: localhost:9092
+
+
 

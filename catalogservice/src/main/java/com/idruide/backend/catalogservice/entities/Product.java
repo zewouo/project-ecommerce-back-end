@@ -31,6 +31,9 @@ public class Product {
     @Column(name = "amount",nullable = false)
     private Integer amount;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
     @Column(name="available")
     private Boolean available;
 

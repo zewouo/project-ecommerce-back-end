@@ -15,10 +15,9 @@ import org.springframework.stereotype.Service;
 public class KafkaPackingConsumer {
 
     @Autowired
-
     private PackingService packingService;
 
-    @KafkaListener(topics ="topicdelivery",groupId = "packing_consumer")
+    @KafkaListener(topics ="topicdelivery")
     public void getMessage(String message) throws JsonProcessingException {
 
         OrderDto order = PackingXmlParser.getXmlMapper().readValue(message, OrderDto.class);
@@ -28,7 +27,7 @@ public class KafkaPackingConsumer {
                 .comment("Automatic delivery")
                 .orderId(order.getId())
                 .build();
-        packingService.savePacking(packingDto);
+        this.packingService.savePacking(packingDto);
         log.info("Created Packing from order N.: " + packingDto.getOrderId() + " in Packing service");
 
     }

@@ -10,6 +10,7 @@ CREATE TABLE product_t (
   name varchar(255) NOT NULL,
   price int NOT NULL,
   available bit(1) DEFAULT 1,
+  quantity int,
   PRIMARY KEY (product_id)
 ) ;
 
