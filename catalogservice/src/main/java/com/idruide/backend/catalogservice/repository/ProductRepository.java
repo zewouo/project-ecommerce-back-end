@@ -4,7 +4,7 @@ package com.idruide.backend.catalogservice.repository;
 import com.idruide.backend.catalogservice.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -13,5 +13,6 @@ import java.util.Collection;
  */
 
 public interface  ProductRepository extends JpaRepository<Product, Integer> {
-    Collection<Product> findByNameIgnoreCase(String nameNormSpace);
+    List<Product> findByCodeProduct(String codeProduct);
+    List<Product> findByName(String name);
 }

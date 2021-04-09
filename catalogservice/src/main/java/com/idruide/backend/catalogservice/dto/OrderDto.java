@@ -14,13 +14,13 @@ import java.util.List;
 public class OrderDto implements Serializable {
 
     private Integer id;
+    private String orderNumber;
     private String costumerName;
     private Integer totalPrice;
     private Boolean shipped;
     private String createdAt;
     private String deliverDate;
     private String address;
-    private List<Integer> productIds;
-
+    private List<String> codeProducts;
 
 }

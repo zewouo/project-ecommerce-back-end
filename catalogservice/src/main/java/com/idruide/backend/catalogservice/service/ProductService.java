@@ -15,19 +15,15 @@ public interface ProductService  {
 
         List<ProductDto> getAllProducts();
 
-        ProductDto validateAndGetProductById(Integer id);
+        ProductDto getProductByName(String name);
 
-        ProductDto validateAndGetProductByName(String name);
+        ProductDto getProductByCode(String codeProduct);
 
         ProductDto saveProduct(ProductDto productDto);
 
         void deleteProduct(ProductDto productDto);
 
-        ProductDto updateProduct(Integer id);
-
-       List<ProductDto> updateProduct(List<Integer> productIds);
-
-
+        ProductDto updateProduct(ProductDto productDto);
 
 
 }

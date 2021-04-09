@@ -29,18 +29,18 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public List<ProductDto> getAllProducts() {
-        log.info("get all Products in catalog service");
+        log.info("get all Products in catalog service. ");
         return productService.getAllProducts();
     }
 
-    public ProductDto getProductById(Integer productId){
-        log.info("get Product with Id " + productId);
-        return productService.validateAndGetProductById(productId);
+    public ProductDto getProductByCode(String codeProduct){
+        log.info("get Product with codeProduct: " + codeProduct);
+        return productService.getProductByCode(codeProduct);
     }
 
     public ProductDto getProductByName(String productName) {
-        log.info("get Product with name " + productName);
-        return productService.validateAndGetProductByName(productName);
+        log.info("get Product with name: " + productName);
+        return productService.getProductByName(productName);
     }
 
 }

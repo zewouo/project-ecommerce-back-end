@@ -17,8 +17,8 @@ public class KafkaCatalogConsumer {
     @KafkaListener(topics ="topicstock")
     public void getMessage(String message) throws JsonProcessingException {
         OrderDto order= CatalogXmlParser.getXmlMapper().readValue(message, OrderDto.class);
-        productService.updateProduct(order.getProductIds());
-        System.out.println(productService.updateProduct(order.getProductIds()));
+        //productService.updateProduct(order.getProductIds());
+        //System.out.println(productService.updateProduct(order.getProductIds()));
 
 
     }
