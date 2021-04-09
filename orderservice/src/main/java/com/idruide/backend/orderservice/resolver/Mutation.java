@@ -6,7 +6,6 @@ import com.idruide.backend.orderservice.dto.OrderDto;
 import com.idruide.backend.orderservice.service.kafka.KafkaCatalogProducer;
 import com.idruide.backend.orderservice.service.kafka.KafkaPackingProducer;
 import com.idruide.backend.orderservice.service.order.OrderService;
-import com.idruide.backend.orderservice.utils.OrderXmlParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,11 +40,11 @@ public class Mutation implements GraphQLMutationResolver {
         OrderDto order = orderService.saveOrder(orderDto);
         log.info("Create Order with ID " + order.getId() + " in Orderservice");
 
-        if(order!= null && order.getId()!= null){
+    /*    if(order!= null && order.getId()!= null){
             this.catalogProducer.publishToCatalog(OrderXmlParser.writeValueAsString(order));
             this.packingProducer.publishToPacking(OrderXmlParser.writeValueAsString(order));
             log.info(" Message send to catalog and packing " + OrderXmlParser.writeValueAsString(order));
-        }
+        }*/
 
         return order;
     }
@@ -55,10 +54,9 @@ public class Mutation implements GraphQLMutationResolver {
         return orderService.saveOrder(orderDto);
     }
 
-    public OrderDto deleteOrder(Integer orderId) {
-        OrderDto orderDto = orderService.validateAndGetOrderById(orderId);
-        log.info("Delete Order with ID " + orderId + " in orderservice");
-        orderService.deleteOrder(orderDto);
+    public OrderDto deleteOrder(OrderDto orderDto) {
+        log.info("Delete Order with  in orderservice");
+        this.orderService.deleteOrder(orderDto);
         return orderDto;
     }
 

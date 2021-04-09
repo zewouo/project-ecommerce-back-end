@@ -14,14 +14,15 @@ public interface OrderService {
 
     List<OrderDto> getAllOrders();
 
-    OrderDto validateAndGetOrderById(Integer id);
+    OrderDto getOrderById(Integer id);
 
     OrderDto saveOrder(OrderDto orderDto);
+
+    OrderDto getOrderByNumber(String numberOrder);
 
     OrderDto saveOrderProduct(OrderDto orderDto);
 
     OrderDto updateOrder(Integer orderId, Integer productId);
-
 
     void deleteOrder(OrderDto orderDto);
 

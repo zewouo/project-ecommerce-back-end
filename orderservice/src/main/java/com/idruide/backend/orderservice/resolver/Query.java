@@ -33,7 +33,7 @@ public class Query implements GraphQLQueryResolver {
 
     public OrderDto getOrderById(Integer orderId) {
         log.info("Get Order By Id " + orderId);
-        return orderService.validateAndGetOrderById(orderId);
+        return orderService.getOrderById(orderId);
     }
 
 }

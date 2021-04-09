@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * @author Thierry Kwekam
  */
 
-@Mapper(builder = @Builder(disableBuilder = true), uses = { ProductMapper.class})
+@Mapper(builder = @Builder(disableBuilder = true), uses = { OrderProductMapper.class})
 public interface OrderMapper {
 
 
@@ -27,7 +27,7 @@ public interface OrderMapper {
 
     Order toOrderDelete(OrderDto orderDto);
 
-    @Mapping(source = "order.products", target = "productIds", qualifiedByName = "toProductIds")
+    @Mapping(source = "order.orderProducts", target = "orderProducts", qualifiedByName = "toOrderProductDtos")
     @Mapping(source = "order.createdAt", target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "order.deliverDate", target = "deliverDate", dateFormat = "dd-MM-yyyy HH:mm")
     OrderDto toOrderDto(Order order);

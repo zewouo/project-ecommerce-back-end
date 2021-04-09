@@ -2,7 +2,7 @@ package com.idruide.backend.orderservice.config;
 
 
 import com.idruide.backend.orderservice.mapper.OrderMapper;
-import com.idruide.backend.orderservice.mapper.ProductMapper;
+import com.idruide.backend.orderservice.mapper.OrderProductMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class MapConf {
 
     @Bean
-    ProductMapper getProductMapper(){ return Mappers.getMapper(ProductMapper.class); }
+    OrderProductMapper getProductMapper(){ return Mappers.getMapper(OrderProductMapper.class); }
 
     @Bean
     OrderMapper getOrderMapper(){
