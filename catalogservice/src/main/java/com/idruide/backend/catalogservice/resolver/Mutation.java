@@ -29,15 +29,14 @@ public class Mutation implements GraphQLMutationResolver {
         return productService.saveProduct(productDto);
     }
 
-    public ProductDto updateProduct(ProductDto productDto) {
+    public ProductDto updateProduct(ProductDto productDto){
         log.info("Update Product " + productDto.getName() + " in catalog service");
         return productService.updateProduct(productDto);
     }
 
-    public ProductDto deleteProduct(ProductDto productDto) {
-       this.productService.deleteProduct(productDto);
-        log.info("Delete Product " + productDto.getName() + " in catalog service");
-        return productDto;
+    public ProductDto  deleteProduct(String codeProduct) {
+        log.info("Delete Product with code: " + codeProduct+ " in catalog service");
+       return this.productService.deleteProduct(codeProduct);
     }
 
 }

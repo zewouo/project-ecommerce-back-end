@@ -9,7 +9,6 @@ schema {
 # ---
 
 type ProductDto {
-
     codeProduct: String!
     name: String!
     price: Int!
@@ -36,7 +35,7 @@ type Query {
 type Mutation {
     createProduct(productInput: ProductInput!): ProductDto!
     updateProduct(productInput: ProductInput!): ProductDto!
-    deleteProduct(productInput: ProductInput!): ProductDto!
+    deleteProduct(codeProduct: String!) : ProductDto!
 }
 
 

@@ -21,7 +21,7 @@ public interface ProductService  {
 
         ProductDto saveProduct(ProductDto productDto);
 
-        void deleteProduct(ProductDto productDto);
+        ProductDto deleteProduct(String codeProduct);
 
         ProductDto updateProduct(ProductDto productDto);
 

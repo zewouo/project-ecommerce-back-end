@@ -7,7 +7,6 @@ import com.idruide.backend.catalogservice.exception.ProductNotFoundException;
 import com.idruide.backend.catalogservice.mapper.ProductMapper;
 import com.idruide.backend.catalogservice.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,9 +62,6 @@ public class ProductServiceImpl implements ProductService {
         return this.productMapper.toProductDto(prod);
     }
 
-
-
-
     @Override
     @Transactional
     public ProductDto saveProduct(ProductDto productDto) {
@@ -85,88 +81,40 @@ public class ProductServiceImpl implements ProductService {
                 .map(List::stream)
                 .get()
                 .map(product -> {
-                    System.out.println("update quantity of product: " + product);
+                    log.info("Update quantities of product: " + product);
                     product.setQuantity(product.getId()!= null ? Integer.sum(product.getQuantity(), productDto.getQuantity()):product.getQuantity() );
                     return product;
                 })
                 .map(product -> this.productRepository.save(product))
                 .map(product -> this.productMapper.toProductDto(product))
                 .findFirst().orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
-
-
-/*
-        //get codeProduct
-        String codeProduct = productDto.getCodeProduct();
-        //set if not
-        if(codeProduct==null){
-            log.warn("Product: code Product not found. ");
-            new ProductNotFoundException("code Product not found. ",-1);
-        }
-        String name = productDto.getName();
-        if(name==null){
-            log.warn("Product: name Product not found. ");
-            new ProductNotFoundException("name Product not found. ",-1);
-        }
-        Integer quantity  = productDto.getQuantity();
-        if(quantity==0){
-            log.warn("Product: quantity  Product must be not null. ");
-            new ProductNotFoundException("name Product not found. ",-1);
-        }
-        //get product by code
-        ProductDto productDtoRec = getProductByCode(codeProduct);
-        if(productDtoRec!= null){
-            //if already exist update Quantity
-            productDto.setQuantity(productDto.getQuantity() + productDtoRec.getQuantity());
-            return this.productMapper.toProductDto(this.productRepository.save(this.productMapper.toProduct(productDto)));
-        }
-        return this.productMapper.toProductDto(this.productRepository.save(this.productMapper.toProduct(productDto)));*/
-
     }
-
-
-
-
 
     @Override
     @Transactional
-    public void deleteProduct(ProductDto productDto) {
-        //get codeProduct
-        String codeProduct = productDto.getCodeProduct();
+
+    public ProductDto deleteProduct(String codeProduct){
         //if not
         if(codeProduct==null){
-            log.warn("Product: " + productDto.getName() + "not found. ");
-           new ProductNotFoundException("Product: " + productDto.getName() + "not found. ",-1);
+            log.warn("Product code is not found. ");
         }
         //else check quantity if get product by code
         ProductDto productDtoRec = getProductByCode(codeProduct);
         //get quantity and compare
-        if(productDtoRec.getQuantity()<= productDto.getQuantity()){
-            this.productRepository.delete(this.productMapper.toProduct(productDto));
-        }else{
-            productDto.setQuantity(productDtoRec.getQuantity() - productDto.getQuantity());
-            this.productMapper.toProductDto(this.productRepository.save(this.productMapper.toProduct(productDto)));
+        if(productDtoRec!=null){
+            this.productRepository.delete(this.productMapper.toProduct(productDtoRec));
+            log.info("Product with code " + codeProduct + " deleted. ");
         }
+        return productDtoRec;
     }
+
     @Override
-    public ProductDto updateProduct(ProductDto productDto) {
+    public ProductDto updateProduct(ProductDto productDto){
         //get codeProduct of productDto
         String codeProduct = productDto.getCodeProduct();
         //if not exist
-        if(codeProduct==null){
-            //set it and save as new product
-            codeProduct=(RandomStringUtils.randomAlphanumeric(8).toUpperCase());
-            productDto.setCodeProduct(codeProduct);
-            return this.productMapper.toProductDto(this.productRepository.save(this.productMapper.toProduct(productDto)));
-        }
        // else get product corresponding of codeProduct
         ProductDto productDtoRec = getProductByCode(codeProduct);
-        //if not exist
-        if(productDtoRec == null){
-            //save as new product
-            return this.productMapper.toProductDto(this.productRepository.save(this.productMapper.toProduct(productDto)));
-        }
-        //else if exist  check quantity and set it
-        productDtoRec.setQuantity(productDto.getQuantity());
         //save
         return this.productMapper.toProductDto(this.productRepository.save(this.productMapper.toProduct(productDtoRec)));
     }
