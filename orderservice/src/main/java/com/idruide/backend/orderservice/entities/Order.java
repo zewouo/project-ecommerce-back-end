@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "order_t")
-public class Order {
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
@@ -59,3 +60,4 @@ public class Order {
 
 
 }
+

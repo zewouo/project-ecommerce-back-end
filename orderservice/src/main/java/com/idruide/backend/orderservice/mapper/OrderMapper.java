@@ -21,6 +21,7 @@ public interface OrderMapper {
 
     @Mapping(source = "orderDto.createdAt", target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "orderDto.deliverDate", target = "deliverDate", dateFormat = "dd-MM-yyyy HH:mm")
+    @Mapping(source = "orderDto.orderProducts", target = "orderProducts", qualifiedByName = "toOrderProducts")
     Order toOrder(OrderDto orderDto);
 
     Order toOrderProduct(OrderDto orderDto);
@@ -42,3 +43,4 @@ public interface OrderMapper {
     }
 
 }
+

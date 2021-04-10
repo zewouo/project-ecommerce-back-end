@@ -4,6 +4,7 @@ package com.idruide.backend.orderservice.mapper;
 import com.idruide.backend.orderservice.dto.OrderProductDto;
 import com.idruide.backend.orderservice.entities.OrderProduct;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.List;
@@ -18,9 +19,9 @@ import java.util.stream.Stream;
  */
 @Mapper
 public interface OrderProductMapper {
-
+    @Mapping(source = "codeProduct", target = "productCode")
     OrderProduct toOrderProduct(OrderProductDto orderProductDto);
-
+    @Mapping(source = "product.product.codeProduct", target = "codeProduct")
     OrderProductDto toProductDto(OrderProduct product);
 
     @Named("toOrderProductDtos")
@@ -40,3 +41,4 @@ public interface OrderProductMapper {
 
     }
 }
+

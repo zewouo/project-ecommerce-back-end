@@ -1,32 +1,44 @@
 package com.idruide.backend.orderservice.entities;
 
+
+
+
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
+
+/**
+ *
+ *
+ * @author Thierry Kwekam
+ */
 
 @Data
 @Entity
-@EqualsAndHashCode(of = {"id"})
 @Table(name = "order_product_t")
-public class OrderProduct {
+public class OrderProduct implements Serializable {
 
     @EmbeddedId
     private OrderProductPK id;
 
-    @ManyToOne(targetEntity = Order.class,
-            fetch = FetchType.EAGER)
-    @JoinColumn(name = "orderNumber", insertable = false, updatable = false,
-            nullable = false,referencedColumnName = "orderNumber")
-    private Order order;
+/*    @ManyToOne
+    @JoinColumn(name = "order_id", insertable = false, updatable = false,
+            nullable = false)
+    private Order order;*/
+
+    @Column(name = "order_number",nullable = false,insertable = false, updatable = false)
+    private String  orderNumber;
 
     @Column(name = "quantity",nullable = false)
     private Integer quantity;
 
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "codeProduct",insertable = false, updatable = false,referencedColumnName = "codeProduct")
+    @OneToOne
+    @JoinColumn(name = "product_id",insertable = false, updatable = false)
     private Product product;
 
+    private transient String productCode;
+
 }
+

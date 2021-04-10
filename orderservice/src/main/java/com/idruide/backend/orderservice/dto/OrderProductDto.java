@@ -5,6 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ *
+ *
+ * @author Thierry Kwekam
+ */
+
 @Getter
 @Data
 @EqualsAndHashCode

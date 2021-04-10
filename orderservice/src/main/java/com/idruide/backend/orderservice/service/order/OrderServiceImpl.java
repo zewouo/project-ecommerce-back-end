@@ -5,6 +5,7 @@ import com.idruide.backend.orderservice.dto.OrderDto;
 import com.idruide.backend.orderservice.dto.OrderProductDto;
 import com.idruide.backend.orderservice.entities.Order;
 import com.idruide.backend.orderservice.entities.OrderProduct;
+import com.idruide.backend.orderservice.entities.OrderProductPK;
 import com.idruide.backend.orderservice.entities.Product;
 import com.idruide.backend.orderservice.exception.OrderNotFoundException;
 import com.idruide.backend.orderservice.exception.ProductNotFoundException;
@@ -83,16 +84,24 @@ public class OrderServiceImpl implements OrderService {
 
         return Optional.ofNullable(orderDto)
                 .filter(this::validateOrder)
-                .map(orderdto ->this.orderMapper.toOrder(orderdto))
+                .map(orderDtoT ->this.orderMapper.toOrder(orderDtoT))
                 .map(order ->  {
-                    order.setOrderNumber(String.valueOf(new UID()));
+                    String orderNumber=String.valueOf(new UID());
+                    order.setOrderNumber(orderNumber);
+                    order.getOrderProducts().forEach(orderProduct -> {
+                        Product prod=this.productRepository.findByCodeProduct(orderProduct.getProductCode());
+                        orderProduct.setProduct(prod);
+                        //orderProduct.setOrder(order);});
+                        orderProduct.setOrderNumber(orderNumber);
+                        orderProduct.setId(OrderProductPK.builder().orderNumber(orderNumber).product(prod).build());
+
+                    });
+
                     return order;
                 })
                 .map( order -> this.orderRepository.save(order))
                 .map(order -> this.orderMapper.toOrderDto(order))
                 .orElse(null);
-
-
 
     }
 
@@ -102,12 +111,12 @@ public class OrderServiceImpl implements OrderService {
                 .orElseGet(Stream::empty)
                 .map(orderProduct -> {
                     Integer avalaibleQuantity = Optional.ofNullable(this.productRepository.findByCodeProduct(orderProduct.getCodeProduct()))
-                 .orElse(Product.builder().quantity(0).build()).getQuantity();
-                  if(avalaibleQuantity > orderProduct.getQuantity()){
-                      return orderProduct;
-                  }else {
-                      return null;
-                  }
+                            .orElse(Product.builder().quantity(0).build()).getQuantity();
+                    if(avalaibleQuantity > orderProduct.getQuantity()){
+                        return orderProduct;
+                    }else {
+                        return null;
+                    }
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

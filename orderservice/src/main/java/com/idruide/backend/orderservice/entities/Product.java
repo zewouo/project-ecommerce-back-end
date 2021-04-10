@@ -7,21 +7,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Thierry Kwekam
  */
+
 @Data
 @Entity
 @Table(name = "product_t")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
-    private Integer id;
+    private Integer productId;
 
     @Column (name = "codeProduct",nullable = false)
     private String codeProduct;
@@ -38,7 +40,9 @@ public class Product {
     @Column(name = "quantity",nullable = false)
     private Integer quantity;
 
-
+/*    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL,
+          fetch = FetchType.LAZY, optional = false)
+   private OrderProduct orderProduct;*/
 }
 
 

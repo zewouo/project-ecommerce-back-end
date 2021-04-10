@@ -1,26 +1,32 @@
 package com.idruide.backend.orderservice.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ *
+ *
+ * @author Thierry Kwekam
+ */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
-@EqualsAndHashCode(of={"orderNumber","codeProduct"})
+@EqualsAndHashCode
+@Builder
 public class OrderProductPK implements Serializable {
 
     private static final long serialVersionUID = -463235182199049241L;
-
-    @Column(name = "orderNumber")
-    private String orderNumber;
-
-    @Column(name = "codeProduct")
-    private String codeProduct;
-
+    /*    @ManyToOne
+        @JoinColumn(name = "order_id")
+        private Order order;*/
+    @Column(name = "order_number")
+    private String  orderNumber;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }
 
 
