@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
@@ -21,7 +19,7 @@ import java.util.List;
 public class Query implements GraphQLQueryResolver {
 
 
-    private ProductService productService;
+    private final ProductService productService;
 
     @Autowired
     public Query(ProductService productService) {
@@ -33,7 +31,7 @@ public class Query implements GraphQLQueryResolver {
         return productService.getAllProducts();
     }
 
-    public ProductDto getProductByCode(String codeProduct){
+    public ProductDto getProductByCode(String codeProduct) {
         log.info("get Product with codeProduct: " + codeProduct);
         return productService.getProductByCode(codeProduct);
     }

@@ -4,14 +4,12 @@ package com.idruide.backend.catalogservice.service;
 import com.idruide.backend.catalogservice.dto.ProductDto;
 
 import java.util.List;
+
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
-public interface ProductService  {
-
+public interface ProductService {
 
         List<ProductDto> getAllProducts();
 
@@ -24,6 +22,5 @@ public interface ProductService  {
         ProductDto deleteProduct(String codeProduct);
 
         ProductDto updateProduct(ProductDto productDto);
-
 
 }

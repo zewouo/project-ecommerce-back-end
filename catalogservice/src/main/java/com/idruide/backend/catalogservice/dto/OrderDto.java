@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @Data
 public class OrderDto implements Serializable {
-
     private Integer id;
     private String orderNumber;
     private String costumerName;
@@ -22,5 +21,4 @@ public class OrderDto implements Serializable {
     private String deliverDate;
     private String address;
     private List<String> codeProducts;
-
 }

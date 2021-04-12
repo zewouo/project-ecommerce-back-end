@@ -5,44 +5,38 @@ schema {
 }
 # Packing
 type PackingDto {
-    id:ID!
-    code:String!
+    codePacking:String!
     deliverDate:String!
     comment:String!
     createdAt:String!
-    orderId:Int!
+    orderNumber:String!
 }
 input PackingInput  {
-
-    code:String!
-    deliverDate:String!
-    comment:String!
-    createdAt:String!
-    orderId:Int!
-
+    codePacking:String!
+    deliverDate:String
+    comment:String
+    createdAt:String
+    orderNumber:String
 }
 
-# Order
-type OrderDto {
-    id: ID!
-    totalPrice: Int!
-    costumerName: String!
-    shipped: Boolean!
-    createdAt: String!
-    deliverDate:String!
-    address: String!
+# Product
+type ProductDto {
+    codeProduct: String!
+    name: String!
+    price: Int!
+    description: String!
+    quantity: Int!
 }
 
-# ---Query
 type Query {
     getAllPackings: [PackingDto!]!
-    getPackingById(packingId:ID!): PackingDto!
+    getPackingByCode(codePacking:String!): PackingDto!
+    getPackingSlipDetails(codePacking: String!):[ProductDto!]!
 }
 
 # ---Mutation
 type Mutation {
     createPacking(packingInput:PackingInput!): PackingDto!
     updatePacking(packingInput:PackingInput): PackingDto!
-    deletePacking(packingId:ID!): PackingDto!
-    addPackingOrder(packingId:ID!,orderInput:ID!): PackingDto!
+    deletePacking(packingInput:PackingInput): PackingDto!
 }

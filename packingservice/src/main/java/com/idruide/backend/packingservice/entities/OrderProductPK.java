@@ -1,8 +1,11 @@
-package com.idruide.backend.orderservice.entities;
+package com.idruide.backend.packingservice.entities;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 
 /**

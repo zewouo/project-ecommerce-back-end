@@ -29,8 +29,6 @@ public interface OrderMapper {
     Order toOrderDelete(OrderDto orderDto);
 
     @Mapping(source = "order.orderProducts", target = "orderProducts", qualifiedByName = "toOrderProductDtos")
-    @Mapping(source = "order.createdAt", target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm")
-    @Mapping(source = "order.deliverDate", target = "deliverDate", dateFormat = "dd-MM-yyyy HH:mm")
     OrderDto toOrderDto(Order order);
 
 
@@ -43,4 +41,5 @@ public interface OrderMapper {
     }
 
 }
+
 

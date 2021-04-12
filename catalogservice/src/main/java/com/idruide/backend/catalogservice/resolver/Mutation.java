@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
@@ -29,14 +27,14 @@ public class Mutation implements GraphQLMutationResolver {
         return productService.saveProduct(productDto);
     }
 
-    public ProductDto updateProduct(ProductDto productDto){
+    public ProductDto updateProduct(ProductDto productDto) {
         log.info("Update Product " + productDto.getName() + " in catalog service");
         return productService.updateProduct(productDto);
     }
 
-    public ProductDto  deleteProduct(String codeProduct) {
-        log.info("Delete Product with code: " + codeProduct+ " in catalog service");
-       return this.productService.deleteProduct(codeProduct);
+    public ProductDto deleteProduct(String codeProduct) {
+        log.info("Delete Product with code: " + codeProduct + " in catalog service");
+        return this.productService.deleteProduct(codeProduct);
     }
 
 }

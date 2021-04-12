@@ -17,18 +17,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
-
 @Service
 @Slf4j
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
-
     private final ProductMapper productMapper;
+    private ProductRepository productRepository;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
@@ -48,14 +44,14 @@ public class ProductServiceImpl implements ProductService {
                 .stream()
                 .findFirst()
                 .orElse(null);
-        return  this.productMapper.toProductDto(product);
+        return this.productMapper.toProductDto(product);
     }
 
     @Override
     @Transactional
     public ProductDto getProductByCode(String code) {
         final String codeProduct = StringUtils.normalizeSpace(code);
-       Product prod = this.productRepository.findByCodeProduct(codeProduct)
+        Product prod = this.productRepository.findByCodeProduct(codeProduct)
                 .stream()
                 .findFirst()
                 .orElse(null);
@@ -69,8 +65,9 @@ public class ProductServiceImpl implements ProductService {
         return Optional.ofNullable(productDto.getCodeProduct())
                 .filter(StringUtils::isNotBlank)
                 .map(code -> this.productRepository.findByCodeProduct(code))
-                .map (products ->
-                        { if(products.isEmpty()) {
+                .map(products ->
+                        {
+                            if (products.isEmpty()) {
                                 Product prod = this.productMapper.toProduct(productDto);
                                 return new ArrayList<Product>() {{
                                     add(prod);
@@ -81,8 +78,8 @@ public class ProductServiceImpl implements ProductService {
                 .map(List::stream)
                 .get()
                 .map(product -> {
-                    log.info("Update quantities of product: " + product);
-                    product.setQuantity(product.getId()!= null ? Integer.sum(product.getQuantity(), productDto.getQuantity()):product.getQuantity() );
+                    log.info("Add quantities of product: " + product);
+                    product.setQuantity(product.getId() != null ? Integer.sum(product.getQuantity(), productDto.getQuantity()) : product.getQuantity());
                     return product;
                 })
                 .map(product -> this.productRepository.save(product))
@@ -90,33 +87,51 @@ public class ProductServiceImpl implements ProductService {
                 .findFirst().orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
     }
 
-    @Override
-    @Transactional
-
-    public ProductDto deleteProduct(String codeProduct){
-        //if not
-        if(codeProduct==null){
-            log.warn("Product code is not found. ");
-        }
-        //else check quantity if get product by code
-        ProductDto productDtoRec = getProductByCode(codeProduct);
-        //get quantity and compare
-        if(productDtoRec!=null){
-            this.productRepository.delete(this.productMapper.toProduct(productDtoRec));
-            log.info("Product with code " + codeProduct + " deleted. ");
-        }
-        return productDtoRec;
+    public ProductDto deleteProduct(String codeProduct) {
+        return Optional.ofNullable(codeProduct)
+                .filter(StringUtils::isNotBlank)
+                .map(code -> this.productRepository.findByCodeProduct(code))
+                .map(products -> {
+                    if (products.isEmpty()) {
+                        return null;
+                    } else return products;
+                })
+                .map(List::stream)
+                .get()
+                .map(product -> {
+                    if (product != null) this.productRepository.delete(product);
+                    return this.productMapper.toProductDto(product);
+                })
+                .findFirst().orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
     }
 
     @Override
-    public ProductDto updateProduct(ProductDto productDto){
-        //get codeProduct of productDto
-        String codeProduct = productDto.getCodeProduct();
-        //if not exist
-       // else get product corresponding of codeProduct
-        ProductDto productDtoRec = getProductByCode(codeProduct);
-        //save
-        return this.productMapper.toProductDto(this.productRepository.save(this.productMapper.toProduct(productDtoRec)));
+    @Transactional
+    public ProductDto updateProduct(ProductDto productDto) {
+        return Optional.ofNullable(productDto.getCodeProduct())
+                .filter(StringUtils::isNotBlank)
+                .map(code -> this.productRepository.findByCodeProduct(code))
+                .map(products -> {
+                    if (products.isEmpty()) {
+                        Product prod = this.productMapper.toProduct(productDto);
+                        return new ArrayList<Product>() {{
+                            add(prod);
+                        }};
+                    } else return products;
+                })
+                .map(List::stream)
+                .get()
+                .map(product -> {
+                    log.info("Update quantities of product: " + product);
+                    product.setName(productDto.getName());
+                    product.setPrice(productDto.getPrice());
+                    product.setDescription(productDto.getDescription());
+                    product.setQuantity(product.getId() != null ? Integer.sum(product.getQuantity(), -(productDto.getQuantity())) : product.getQuantity());
+                    return product;
+                })
+                .map(product -> this.productRepository.save(product))
+                .map(product -> this.productMapper.toProductDto(product))
+                .findFirst().orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
     }
 
 }

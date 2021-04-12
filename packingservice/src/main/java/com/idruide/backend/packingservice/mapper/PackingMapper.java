@@ -11,20 +11,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
 @Mapper
 public interface PackingMapper {
 
-
     @Mapping(source = "packingDto.createdAt", target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "packingDto.deliverDate", target = "deliverDate", dateFormat = "dd-MM-yyyy HH:mm")
     Packing toPacking(PackingDto packingDto);
 
-    @Mapping(source = "packing.order.id", target = "orderId")
+    @Mapping(source = "packing.order.orderNumber", target = "orderNumber")
     PackingDto toPackingDto(Packing packing);
 
     default List<PackingDto> toPackingsDto(List<Packing> packing) {

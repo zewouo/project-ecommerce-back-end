@@ -19,6 +19,7 @@ import java.util.stream.Stream;
  */
 @Mapper
 public interface OrderProductMapper {
+
     @Mapping(source = "codeProduct", target = "productCode")
     OrderProduct toOrderProduct(OrderProductDto orderProductDto);
     @Mapping(source = "product.product.codeProduct", target = "codeProduct")

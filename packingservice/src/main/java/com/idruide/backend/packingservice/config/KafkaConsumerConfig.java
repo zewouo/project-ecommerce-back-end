@@ -14,7 +14,11 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ *
+ *
+ * @author Thierry Kwekam
+ */
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
@@ -51,5 +55,4 @@ public class KafkaConsumerConfig {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-
 }

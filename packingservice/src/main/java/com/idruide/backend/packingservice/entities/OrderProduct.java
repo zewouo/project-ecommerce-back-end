@@ -1,14 +1,8 @@
-package com.idruide.backend.orderservice.entities;
-
-
-
+package com.idruide.backend.packingservice.entities;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import java.io.Serializable;
-
-
 /**
  *
  *

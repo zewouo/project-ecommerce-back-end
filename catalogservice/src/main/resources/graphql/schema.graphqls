@@ -24,7 +24,6 @@ input ProductInput {
 
 }
 
-
 type Query {
     # Fetch All Products
     getAllProducts : [ProductDto!]!

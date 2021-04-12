@@ -14,6 +14,9 @@ import org.springframework.kafka.core.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Thierry Kwekam
+ */
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {

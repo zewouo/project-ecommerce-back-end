@@ -20,11 +20,9 @@ public interface OrderService {
 
     OrderDto getOrderByNumber(String numberOrder);
 
-    OrderDto saveOrderProduct(OrderDto orderDto);
+    OrderDto updateOrder(OrderDto orderDto);
 
-    OrderDto updateOrder(Integer orderId, Integer productId);
-
-    void deleteOrder(OrderDto orderDto);
+    OrderDto deleteOrder(OrderDto orderDto);
 
 
 }

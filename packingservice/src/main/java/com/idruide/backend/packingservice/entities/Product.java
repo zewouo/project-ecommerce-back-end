@@ -1,23 +1,29 @@
-package com.idruide.backend.catalogservice.entities;
+package com.idruide.backend.packingservice.entities;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Thierry Kwekam
  */
 
-@Entity
 @Data
+@Entity
 @Table(name = "product_t")
-public class Product {
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
-    private Integer id;
+    private Integer productId;
 
     @Column(name = "codeProduct", nullable = false)
     private String codeProduct;
@@ -35,3 +41,7 @@ public class Product {
     private Integer quantity;
 
 }
+
+
+
+
