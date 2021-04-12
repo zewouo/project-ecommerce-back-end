@@ -1,0 +1,127 @@
+version: "3"
+services: 
+  order-service:
+     build:
+       context: .
+       dockerfile: orderservice/Dockerfile 
+     container_name: docker-orderservice
+     environment: 
+       WAIT_HOSTS: "mysql:3306,kafka:9092"
+       WAIT_HOSTS_TIMEOUT: 300
+       WAIT_SLEEP_INTERVAL: 60
+       WAIT_HOST_CONNECT_TIMEOUT: 30
+     depends_on: 
+         - mysql-service
+         - kafka
+     image: orderservice
+     ports: 
+       - "10444:8000"
+     restart: on-failure
+     networks:
+       - networkIdruide
+  catalog-service: 
+      build:
+        context: .
+        dockerfile: catalogservice/Dockerfile
+      container_name: docker-catalogservice
+      depends_on: 
+        - mysql-service
+        - kafka
+      environment: 
+        WAIT_HOSTS: "mysql:3306,kafka:9092"
+        WAIT_HOSTS_TIMEOUT: 300
+        WAIT_SLEEP_INTERVAL: 60
+        WAIT_HOST_CONNECT_TIMEOUT: 30
+    
+      image: catalogservice
+      ports: 
+        - "10555:9000"
+      restart: on-failure
+      networks:
+        - networkIdruide
+  packing-service:
+    build:
+      context: .
+      dockerfile: packingservice/Dockerfile 
+    container_name: docker-packingservice
+    environment: 
+      WAIT_HOSTS: "mysql:3306,kafka:9092"
+      WAIT_HOSTS_TIMEOUT: 300
+      WAIT_SLEEP_INTERVAL: 60
+      WAIT_HOST_CONNECT_TIMEOUT: 30
+    depends_on: 
+        - mysql-service
+        - kafka 
+    image: packingservice
+    ports: 
+      - "10333:7000"
+    restart: on-failure
+    networks:
+      - networkIdruide 
+  mysql-service: 
+      container_name: docker-mysql
+      environment: 
+        MYSQL_DABATASE: idrivedb
+        MYSQL_ROOT_HOST: "%"
+        MYSQL_ROOT_PASSWORD: admin
+      healthcheck: 
+        interval: 4s
+        retries: 5
+        test: "/usr/bin/mysql --user=root --password=admin --execute \\\"SHOW DATABASES\" "
+        timeout: 20s
+      image: mysql
+      ports: 
+        - "6666:3306"
+      restart: always
+      volumes: 
+        - "./sql:/docker-entrypoint-initdb.d"
+      networks:
+        networkIdruide:
+          aliases:
+           - mysql-service
+  zookeeper:
+        image: confluentinc/cp-zookeeper
+        ports:
+          - 2181:2181
+        environment:
+          ZOOKEEPER_CLIENT_PORT: 2181
+          ALLOW_ANONYMOUS_LOGIN: "yes"
+        container_name: zookeeper
+        networks:
+          networkIdruide:
+            aliases:
+             - zookeeper
+  kafka:
+       image: confluentinc/cp-kafka
+       container_name: kafka
+       ports:
+          - 9092:9092
+       environment:
+          KAFKA_ADVERTISED_HOST_NAME: kafka
+          KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+          KAFKA_CREATE_TOPIC: "topicstock:1:1,topicdelivery:1:1"
+          KAFKA_BROKER_ID: 1
+          ALLOW_PLAINTEXT_LISTENER: "yes"
+          KAFKA_ADVERTISED_LISTENERS : PLAINTEXT://127.0.0.1:29092,PLAINTEXT_HOST://kafka:9092
+          KAFKA_JMX_PORT: 9101    
+          KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+          KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+          KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+          KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+          KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
+          KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+          KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+          CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: 127.0.0.1:29092
+          CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+          CONFLUENT_METRICS_ENABLE: 'true'
+          CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+       networks:
+          networkIdruide:
+            aliases:
+             - kafka
+       volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+       depends_on:
+          - zookeeper
+networks:
+      networkIdruide:

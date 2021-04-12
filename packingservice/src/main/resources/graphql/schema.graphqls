@@ -1,0 +1,48 @@
+#@author Thierry Kwekam
+schema {
+    query:Query,
+    mutation:Mutation
+}
+# Packing
+type PackingDto {
+    id:ID!
+    code:String!
+    deliverDate:String!
+    comment:String!
+    createdAt:String!
+    orderId:Int!
+}
+input PackingInput  {
+
+    code:String!
+    deliverDate:String!
+    comment:String!
+    createdAt:String!
+    orderId:Int!
+
+}
+
+# Order
+type OrderDto {
+    id: ID!
+    totalPrice: Int!
+    costumerName: String!
+    shipped: Boolean!
+    createdAt: String!
+    deliverDate:String!
+    address: String!
+}
+
+# ---Query
+type Query {
+    getAllPackings: [PackingDto!]!
+    getPackingById(packingId:ID!): PackingDto!
+}
+
+# ---Mutation
+type Mutation {
+    createPacking(packingInput:PackingInput!): PackingDto!
+    updatePacking(packingInput:PackingInput): PackingDto!
+    deletePacking(packingId:ID!): PackingDto!
+    addPackingOrder(packingId:ID!,orderInput:ID!): PackingDto!
+}

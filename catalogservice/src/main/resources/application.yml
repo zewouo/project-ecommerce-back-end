@@ -1,0 +1,17 @@
+graphql:
+  servlet:
+    mapping: /catalog
+    enabled: true
+    corsEnabled: true
+
+graphiql:
+  mapping: /graphiql
+  endpoint: /catalog
+  enabled: true
+  pageTitle: GraphiQL
+  cdn:
+    enabled: false
+
+
+
+

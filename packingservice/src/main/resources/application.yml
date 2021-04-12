@@ -1,0 +1,16 @@
+graphql:
+  servlet:
+    mapping: /packing
+    enabled: true
+    corsEnabled: true
+
+graphiql:
+  mapping: /graphiql
+  endpoint: /packing
+  enabled: true
+  pageTitle: GraphiQL
+  cdn:
+    enabled: false
+
+
+
