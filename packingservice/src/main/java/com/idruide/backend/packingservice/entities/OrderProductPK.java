@@ -9,8 +9,6 @@ import javax.persistence.OneToOne;
 import java.io.Serializable;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 @Data
@@ -24,7 +22,7 @@ public class OrderProductPK implements Serializable {
     private static final long serialVersionUID = -463235182199049241L;
 
     @Column(name = "order_number")
-    private String  orderNumber;
+    private String orderNumber;
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;

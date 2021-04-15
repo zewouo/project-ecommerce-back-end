@@ -16,9 +16,7 @@ public class KafkaCatalogProducer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-
     public void publishToCatalog(String message) {
-
         this.kafkaTemplate.send(topicName, message);
     }
 }

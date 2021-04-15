@@ -17,23 +17,6 @@ public class ProductNotFoundException extends RuntimeException implements GraphQ
 
     private final Map<String, Object> extensions = new HashMap<>();
 
-
-
-    public ProductNotFoundException(String message, Integer id) {
-        super(message);
-        extensions.put("invalidOrderId", id);
-    }
-
-    public ProductNotFoundException(String message, String name) {
-        super(message);
-        extensions.put("invalidProductName", name);
-    }
-
-    public ProductNotFoundException( String message) {
-        super(message);
-        extensions.put("invalidProductName",null);
-    }
-
     @Override
     public List<SourceLocation> getLocations() {
         return null;

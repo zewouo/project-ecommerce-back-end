@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class PackingDateUtils {
 
-    private static final String datePattern = "dd-MM-yyyy HH:mm";
+    public  static final String datePattern = "dd-MM-yyyy HH:mm";
     private static final int deliveryDate = 5;
 
     public static LocalDateTime SystemDateNow() {
@@ -17,7 +17,6 @@ public class PackingDateUtils {
 
     public static LocalDateTime estimatedDeliveryDate() {
         return LocalDateTime.parse(LocalDateTime.now().plusDays(deliveryDate).format(DateTimeFormatter.ofPattern(datePattern)), DateTimeFormatter.ofPattern(datePattern));
-
     }
 
 }

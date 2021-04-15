@@ -8,19 +8,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
-
 @Configuration
 public class MapConf {
 
     @Bean
-    OrderProductMapper getProductMapper(){ return Mappers.getMapper(OrderProductMapper.class); }
+    OrderProductMapper getProductMapper() {
+        return Mappers.getMapper(OrderProductMapper.class);
+    }
 
     @Bean
-    OrderMapper getOrderMapper(){
+    OrderMapper getOrderMapper() {
         return Mappers.getMapper(OrderMapper.class);
     }
 

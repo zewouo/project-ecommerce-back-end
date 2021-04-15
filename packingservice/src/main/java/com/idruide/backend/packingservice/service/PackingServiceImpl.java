@@ -96,13 +96,14 @@ public class PackingServiceImpl implements PackingService {
                     int nbrProduct = prod.getQuantity();
                     if (nbrProduct > 1) {
                         for (int i = 0; i < nbrProduct; i++) {
-                            Product pro = new Product();
-                            pro.setCodeProduct(prod.getCodeProduct());
-                            pro.setDescription(prod.getDescription());
-                            pro.setName(prod.getName());
-                            pro.setPrice(prod.getPrice());
-                            pro.setProductId(prod.getProductId());
-                            pro.setQuantity(1);
+                            Product pro = Product.builder()
+                                    .codeProduct(prod.getCodeProduct())
+                                    .description(prod.getDescription())
+                                    .name(prod.getName())
+                                    .price(prod.getPrice())
+                                    .productId(prod.getProductId())
+                                    .quantity(1)
+                                    .build();
                             results.add(pro);
                         }
 
@@ -141,6 +142,5 @@ public class PackingServiceImpl implements PackingService {
                 })
                 .findFirst().orElseThrow(() -> new PackingNotFoundException("packing code not found. ", -1));
     }
-
 
 }

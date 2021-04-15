@@ -5,8 +5,6 @@ import com.idruide.backend.orderservice.dto.OrderDto;
 import java.util.List;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
@@ -18,11 +16,10 @@ public interface OrderService {
 
     OrderDto saveOrder(OrderDto orderDto);
 
-    OrderDto getOrderByNumber(String numberOrder);
+    OrderDto deleteOrder(OrderDto orderDto);
 
     OrderDto updateOrder(OrderDto orderDto);
 
-    OrderDto deleteOrder(OrderDto orderDto);
-
+    OrderDto getOrderByNumber(String numberOrder);
 
 }

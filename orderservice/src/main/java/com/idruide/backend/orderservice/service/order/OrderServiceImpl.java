@@ -69,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderDto getOrderByNumber(String numberOrder) {
         return this.orderRepository.findByOrderNumber(numberOrder)
                 .stream()

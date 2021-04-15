@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-    //@Join(value = "orderProducts", type = Join.Type.FETCH)
     Order findByOrderNumber(String orderNumber);
 }

@@ -1,7 +1,6 @@
 package com.idruide.backend.packingservice.config;
 
 
-import com.idruide.backend.packingservice.mapper.OrderMapper;
 import com.idruide.backend.packingservice.mapper.PackingMapper;
 import com.idruide.backend.packingservice.mapper.ProductMapper;
 import org.mapstruct.factory.Mappers;
@@ -25,9 +24,5 @@ public class MapConf {
         return Mappers.getMapper(ProductMapper.class);
     }
 
-    @Bean
-    OrderMapper getOrderMapper() {
-        return Mappers.getMapper(OrderMapper.class);
-    }
 
 }

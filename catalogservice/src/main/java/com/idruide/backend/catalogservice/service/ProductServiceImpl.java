@@ -1,6 +1,7 @@
 package com.idruide.backend.catalogservice.service;
 
 
+import com.idruide.backend.catalogservice.dto.OrderProductDto;
 import com.idruide.backend.catalogservice.dto.ProductDto;
 import com.idruide.backend.catalogservice.entities.Product;
 import com.idruide.backend.catalogservice.exception.ProductNotFoundException;
@@ -12,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -51,32 +52,25 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductDto getProductByCode(String code) {
         final String codeProduct = StringUtils.normalizeSpace(code);
-        Product prod = this.productRepository.findByCodeProduct(codeProduct)
-                .stream()
-                .findFirst()
-                .orElse(null);
+        Product prod = this.productRepository.findByCodeProduct(codeProduct);
         return this.productMapper.toProductDto(prod);
     }
 
     @Override
     @Transactional
     public ProductDto saveProduct(ProductDto productDto) {
-
         return Optional.ofNullable(productDto.getCodeProduct())
                 .filter(StringUtils::isNotBlank)
                 .map(code -> this.productRepository.findByCodeProduct(code))
-                .map(products ->
+                .map(product ->
                         {
-                            if (products.isEmpty()) {
+                            if (product==null) {
                                 Product prod = this.productMapper.toProduct(productDto);
-                                return new ArrayList<Product>() {{
-                                    add(prod);
-                                }};
-                            } else return products;
+                                    return prod;
+
+                            } else return product;
                         }
                 )
-                .map(List::stream)
-                .get()
                 .map(product -> {
                     log.info("Add quantities of product: " + product);
                     product.setQuantity(product.getId() != null ? Integer.sum(product.getQuantity(), productDto.getQuantity()) : product.getQuantity());
@@ -84,25 +78,19 @@ public class ProductServiceImpl implements ProductService {
                 })
                 .map(product -> this.productRepository.save(product))
                 .map(product -> this.productMapper.toProductDto(product))
-                .findFirst().orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
+                .orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
     }
 
     public ProductDto deleteProduct(String codeProduct) {
         return Optional.ofNullable(codeProduct)
                 .filter(StringUtils::isNotBlank)
                 .map(code -> this.productRepository.findByCodeProduct(code))
-                .map(products -> {
-                    if (products.isEmpty()) {
-                        return null;
-                    } else return products;
-                })
-                .map(List::stream)
-                .get()
+                 .filter(Objects::nonNull)
                 .map(product -> {
                     if (product != null) this.productRepository.delete(product);
                     return this.productMapper.toProductDto(product);
                 })
-                .findFirst().orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
+               .orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
     }
 
     @Override
@@ -111,27 +99,39 @@ public class ProductServiceImpl implements ProductService {
         return Optional.ofNullable(productDto.getCodeProduct())
                 .filter(StringUtils::isNotBlank)
                 .map(code -> this.productRepository.findByCodeProduct(code))
-                .map(products -> {
-                    if (products.isEmpty()) {
-                        Product prod = this.productMapper.toProduct(productDto);
-                        return new ArrayList<Product>() {{
-                            add(prod);
-                        }};
-                    } else return products;
-                })
-                .map(List::stream)
-                .get()
+                .filter(Objects::nonNull)
                 .map(product -> {
-                    log.info("Update quantities of product: " + product);
+                    product.setCodeProduct(productDto.getCodeProduct());
+                    product.setDescription(productDto.getDescription());
                     product.setName(productDto.getName());
                     product.setPrice(productDto.getPrice());
-                    product.setDescription(productDto.getDescription());
-                    product.setQuantity(product.getId() != null ? Integer.sum(product.getQuantity(), -(productDto.getQuantity())) : product.getQuantity());
+                    product.setQuantity(productDto.getQuantity());
                     return product;
                 })
-                .map(product -> this.productRepository.save(product))
+                .map(product -> {
+                    log.info(" product : " + product);
+                    return  this.productRepository.save(product);
+                })
                 .map(product -> this.productMapper.toProductDto(product))
-                .findFirst().orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
+                .orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
+    }
+
+    @Override
+    @Transactional
+    public ProductDto updateProductQuantity(OrderProductDto orderProductDto) {
+        return Optional.ofNullable(orderProductDto.getCodeProduct())
+                .filter(StringUtils::isNotBlank)
+                .map(code -> this.productRepository.findByCodeProduct(code))
+                .filter(Objects::nonNull)
+                .map(product -> {
+                    product.setQuantity((product.getQuantity() - orderProductDto.getQuantity()));
+                    return product;
+                })
+                .map(product -> {
+                    return  this.productRepository.save(product);
+                })
+                .map(product -> this.productMapper.toProductDto(product))
+                .orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
     }
 
 }

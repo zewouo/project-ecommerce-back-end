@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 @Mapper
@@ -22,6 +20,7 @@ public interface OrderProductMapper {
 
     @Mapping(source = "codeProduct", target = "productCode")
     OrderProduct toOrderProduct(OrderProductDto orderProductDto);
+
     @Mapping(source = "product.product.codeProduct", target = "codeProduct")
     OrderProductDto toProductDto(OrderProduct product);
 

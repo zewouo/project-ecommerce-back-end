@@ -10,14 +10,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 @Component
 @Slf4j
 public class Query implements GraphQLQueryResolver {
-
 
     private OrderService orderService;
 

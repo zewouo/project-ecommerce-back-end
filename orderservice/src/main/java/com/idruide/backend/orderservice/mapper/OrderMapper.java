@@ -2,7 +2,9 @@ package com.idruide.backend.orderservice.mapper;
 
 import com.idruide.backend.orderservice.dto.OrderDto;
 import com.idruide.backend.orderservice.entities.Order;
-import org.mapstruct.*;
+import org.mapstruct.Builder;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,12 +12,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
-@Mapper(builder = @Builder(disableBuilder = true), uses = { OrderProductMapper.class})
+@Mapper(builder = @Builder(disableBuilder = true), uses = {OrderProductMapper.class})
 public interface OrderMapper {
 
 
@@ -24,10 +24,9 @@ public interface OrderMapper {
     @Mapping(source = "orderDto.orderProducts", target = "orderProducts", qualifiedByName = "toOrderProducts")
     Order toOrder(OrderDto orderDto);
 
-    Order toOrderProduct(OrderDto orderDto);
 
-    Order toOrderDelete(OrderDto orderDto);
-
+    @Mapping(source = "order.createdAt", target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm")
+    @Mapping(source = "order.deliverDate", target = "deliverDate", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "order.orderProducts", target = "orderProducts", qualifiedByName = "toOrderProductDtos")
     OrderDto toOrderDto(Order order);
 

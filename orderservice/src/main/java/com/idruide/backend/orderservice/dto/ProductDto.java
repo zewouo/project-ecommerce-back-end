@@ -1,7 +1,6 @@
 package com.idruide.backend.orderservice.dto;
 
 import lombok.Data;
-
 /**
  *
  *
@@ -14,6 +13,6 @@ public class ProductDto {
     private String name;
     private Integer price;
     private String description;
-    private Integer amount;
+    private Integer quantity;
     private OrderProductDto order;
 }

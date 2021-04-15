@@ -7,8 +7,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 @Service
@@ -16,12 +14,12 @@ import org.springframework.stereotype.Service;
 public class KafkaPackingProducer {
 
     @Value("${idruide.kafka.packing.producer}")
-    private  String topicName;
+    private String topicName;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
-    public void publishToPacking(String message){
 
-        this.kafkaTemplate.send(topicName,message);
+    public void publishToPacking(String message) {
+        this.kafkaTemplate.send(topicName, message);
     }
 }

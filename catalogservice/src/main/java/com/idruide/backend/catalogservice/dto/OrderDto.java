@@ -1,6 +1,8 @@
 package com.idruide.backend.catalogservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -11,7 +13,10 @@ import java.util.List;
  */
 @Getter
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@EqualsAndHashCode
 public class OrderDto implements Serializable {
+
     private Integer id;
     private String orderNumber;
     private String costumerName;
@@ -20,5 +25,6 @@ public class OrderDto implements Serializable {
     private String createdAt;
     private String deliverDate;
     private String address;
-    private List<String> codeProducts;
+    private List<OrderProductDto> orderProducts;
+
 }
