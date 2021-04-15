@@ -6,6 +6,11 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.idruide.backend.orderservice.dto.OrderDto;
 
+/**
+ *
+ *
+ * @author Thierry Kwekam
+ */
 public class OrderXmlParser {
 
 

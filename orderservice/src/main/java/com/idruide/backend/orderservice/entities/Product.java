@@ -1,21 +1,32 @@
 package com.idruide.backend.orderservice.entities;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Thierry Kwekam
  */
+
 @Data
 @Entity
 @Table(name = "product_t")
-public class Product {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
-    private Integer id;
+    private Integer productId;
+
+    @Column (name = "codeProduct",nullable = false)
+    private String codeProduct;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -26,8 +37,12 @@ public class Product {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "amount", nullable = false)
-    private Integer amount;
+    @Column(name = "quantity",nullable = false)
+    private Integer quantity;
 
-
+/*    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL,
+          fetch = FetchType.LAZY, optional = false)
+   private OrderProduct orderProduct;*/
 }
+
+

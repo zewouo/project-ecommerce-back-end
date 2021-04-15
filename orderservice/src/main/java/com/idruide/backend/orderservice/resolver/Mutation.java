@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
@@ -36,12 +34,9 @@ public class Mutation implements GraphQLMutationResolver {
         this.orderService = orderService;
     }
 
-
     public OrderDto createOrder(OrderDto orderDto) throws JsonProcessingException {
         OrderDto order = orderService.saveOrder(orderDto);
-        log.info("Create Order with ID " + order.getId() + " in Orderservice");
-
-        if(order!= null && order.getId()!= null){
+        if (order != null && order.getId() != null) {
             this.catalogProducer.publishToCatalog(OrderXmlParser.writeValueAsString(order));
             this.packingProducer.publishToPacking(OrderXmlParser.writeValueAsString(order));
             log.info(" Message send to catalog and packing " + OrderXmlParser.writeValueAsString(order));
@@ -51,21 +46,19 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public OrderDto updateOrder(OrderDto orderDto) {
-        log.info("Update Order with ID " + orderDto.getId() + " in orderservice");
-        return orderService.saveOrder(orderDto);
+        if (orderDto.getOrderNumber() == null) {
+            log.warn("please enter a valid  number Order before Ubdate!!!");
+        }
+        log.info("Update Order with Order Number " + orderDto.getOrderNumber() + " in orderservice");
+        return this.orderService.saveOrder(orderDto);
     }
 
-    public OrderDto deleteOrder(Integer orderId) {
-        OrderDto orderDto = orderService.validateAndGetOrderById(orderId);
-        log.info("Delete Order with ID " + orderId + " in orderservice");
-        orderService.deleteOrder(orderDto);
-        return orderDto;
+    public OrderDto deleteOrder(OrderDto orderDto) {
+        if (orderDto.getOrderNumber() == null) {
+            log.warn("please enter a valid  number Order before delete!!!");
+        }
+        log.info("Delete Order with  Order Number " + orderDto.getOrderNumber() + " in orderservice");
+        return this.orderService.deleteOrder(orderDto);
     }
-
-    public OrderDto addOrderProduct(Integer orderId, Integer productId) {
-        log.info("Add product to  Order with orderId " + orderId + "and productId " + productId + " in orderservice");
-        return orderService.updateOrder(orderId, productId);
-    }
-
 
 }

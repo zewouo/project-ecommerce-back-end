@@ -1,14 +1,11 @@
 package com.idruide.backend.packingservice.entities;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 @Data
@@ -20,24 +17,22 @@ public class Packing {
     @Column(name = "packing_id")
     private Integer id;
 
-    @Column(name = "code",nullable = false)
-    private String code;
+    @Column(name = "codePacking", nullable = false)
+    private String codePacking;
 
 
-    @Column(name = "deliver_date",nullable = false)
+    @Column(name = "deliver_date", nullable = false)
     private LocalDateTime deliverDate;
 
-    @Column(name = "comment",nullable = false)
+    @Column(name = "comment", nullable = false)
     private String comment;
 
 
-    @Column(name = "created_at",nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="order_id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @JoinColumn(name = "order_id")
     private Order order;
-
-
 
 }

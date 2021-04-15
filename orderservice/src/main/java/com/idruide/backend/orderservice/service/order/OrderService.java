@@ -5,8 +5,6 @@ import com.idruide.backend.orderservice.dto.OrderDto;
 import java.util.List;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
@@ -14,16 +12,14 @@ public interface OrderService {
 
     List<OrderDto> getAllOrders();
 
-    OrderDto validateAndGetOrderById(Integer id);
+    OrderDto getOrderById(Integer id);
 
     OrderDto saveOrder(OrderDto orderDto);
 
-    OrderDto saveOrderProduct(OrderDto orderDto);
+    OrderDto deleteOrder(OrderDto orderDto);
 
-    OrderDto updateOrder(Integer orderId, Integer productId);
+    OrderDto updateOrder(OrderDto orderDto);
 
-
-    void deleteOrder(OrderDto orderDto);
-
+    OrderDto getOrderByNumber(String numberOrder);
 
 }

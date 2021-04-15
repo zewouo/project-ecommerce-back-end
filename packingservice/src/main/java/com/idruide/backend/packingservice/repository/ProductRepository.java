@@ -1,11 +1,12 @@
-package com.idruide.backend.orderservice.repository;
+package com.idruide.backend.packingservice.repository;
 
-import com.idruide.backend.orderservice.entities.Product;
+import com.idruide.backend.packingservice.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author Thierry Kwekam
  */
+
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    Product findByCodeProduct(String codeProduct);
+    void delete(Product entity);
 }

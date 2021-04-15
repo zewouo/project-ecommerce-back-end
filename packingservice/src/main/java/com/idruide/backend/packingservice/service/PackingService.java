@@ -2,6 +2,7 @@ package com.idruide.backend.packingservice.service;
 
 
 import com.idruide.backend.packingservice.dto.PackingDto;
+import com.idruide.backend.packingservice.dto.ProductDto;
 
 import java.util.List;
 
@@ -14,10 +15,13 @@ public interface PackingService {
 
     List<PackingDto> getAllPackings();
 
-    PackingDto validateAndGetPackingById(Integer id);
+    PackingDto getPackingByCode(String codePacking);
+
+    List<ProductDto> getProductsByPacking(String codePacking);
 
     PackingDto savePacking(PackingDto packingDto);
 
-    void deletePacking(PackingDto packingDto);
+    PackingDto deletePacking(PackingDto packingDto);
+
 
 }

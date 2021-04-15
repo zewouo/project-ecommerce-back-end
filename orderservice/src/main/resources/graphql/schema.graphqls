@@ -1,4 +1,3 @@
-#@author Thierry Kwekam
 schema {
     query:Query,
     mutation:Mutation
@@ -7,40 +6,44 @@ schema {
 # Order
 type OrderDto {
     id: ID!
+    orderNumber: String!
     totalPrice: Int!
     costumerName: String!
-    shipped: Boolean!
+    shipped: Boolean
     createdAt: String!
-    deliverDate:String!
+    deliverDate:String
     address: String!
-    productIds: [Int!]
+    orderProducts: [OrderProductDto!]
 }
 
 input OrderInput {
-
-    totalPrice: Int!
     costumerName: String!
-    shipped: Boolean!
-    createdAt: String!
-    deliverDate:String!
+    totalPrice: Int!
+    shipped: Boolean
     address: String!
-    productIds: [Int!]
+    orderProducts: [OrderProductInput!]
+}
+# OrderProduct
+type OrderProductDto {
+    codeProduct: String!
+    quantity : Int!
 }
 
-
+input OrderProductInput {
+    codeProduct: String!
+    quantity : Int!
+}
 # ---
 
 type Query {
     getAllOrders:[OrderDto!]!
     getOrderById(orderId:ID!): OrderDto
-
 }
 
 # ---
 
 type Mutation {
-    createOrder(orderInput:OrderInput!): OrderDto!
-    updateOrder(orderInput:OrderInput!): OrderDto!
-    deleteOrder(orderId:ID!): OrderDto!
-    addOrderProduct(orderId:ID!, productId: ID!): OrderDto!
+    createOrder(orderInput:OrderInput!): OrderDto
+    updateOrder(orderInput:OrderInput!): OrderDto
+    deleteOrder(orderInput:OrderInput!): OrderDto
 }

@@ -2,17 +2,16 @@ package com.idruide.backend.packingservice.entities;
 
 import lombok.Data;
 import lombok.Getter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
@@ -20,18 +19,23 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "order_t")
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = -463935182199049241L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
     private Integer id;
 
-    @Column(name = "costumer_name")
+    @Column(name = "order_number", nullable = false)
+    private String orderNumber;
+
+    @Column(name = "costumer_name", nullable = false)
     private String costumerName;
 
-    @Column(name = "total_price")
+    @Column(name = "total_price", nullable = false)
     private Integer totalPrice;
 
-    @Column(name = "shipped", nullable = false)
+    @Column(name = "shipped")
     private Boolean shipped;
 
     @Column(name = "created_at")
@@ -42,5 +46,10 @@ public class Order {
 
     @Column(name = "address")
     private String address;
+
+    @Fetch(FetchMode.JOIN)
+    @OneToMany(targetEntity = OrderProduct.class,
+            fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.REMOVE}, mappedBy = "orderId")
+    private List<OrderProduct> orderProducts;
 
 }

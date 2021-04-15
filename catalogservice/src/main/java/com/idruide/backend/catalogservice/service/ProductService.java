@@ -1,33 +1,29 @@
 package com.idruide.backend.catalogservice.service;
 
 
+import com.idruide.backend.catalogservice.dto.OrderProductDto;
 import com.idruide.backend.catalogservice.dto.ProductDto;
 
 import java.util.List;
+
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
-public interface ProductService  {
-
+public interface ProductService {
 
         List<ProductDto> getAllProducts();
 
-        ProductDto validateAndGetProductById(Integer id);
+        ProductDto getProductByName(String name);
 
-        ProductDto validateAndGetProductByName(String name);
+        ProductDto getProductByCode(String codeProduct);
 
         ProductDto saveProduct(ProductDto productDto);
 
-        void deleteProduct(ProductDto productDto);
+        ProductDto deleteProduct(String codeProduct);
 
-        ProductDto updateProduct(Integer id);
+        ProductDto updateProduct(ProductDto productDto);
 
-       List<ProductDto> updateProduct(List<Integer> productIds);
-
-
-
+        ProductDto updateProductQuantity(OrderProductDto orderProductDto);
 
 }
