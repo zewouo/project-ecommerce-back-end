@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -56,36 +55,32 @@ public class ProductServiceImpl implements ProductService {
         return this.productMapper.toProductDto(prod);
     }
 
+    //save new  product if product non exist,else update quantity
     @Override
     @Transactional
     public ProductDto saveProduct(ProductDto productDto) {
-        return Optional.ofNullable(productDto.getCodeProduct())
-                .filter(StringUtils::isNotBlank)
-                .map(code -> this.productRepository.findByCodeProduct(code))
-                .map(product ->
-                        {
-                            if (product==null) {
-                                Product prod = this.productMapper.toProduct(productDto);
-                                    return prod;
-
-                            } else return product;
-                        }
-                )
-                .map(product -> {
-                    log.info("Add quantities of product: " + product);
-                    product.setQuantity(product.getId() != null ? Integer.sum(product.getQuantity(), productDto.getQuantity()) : product.getQuantity());
-                    return product;
-                })
-                .map(product -> this.productRepository.save(product))
-                .map(product -> this.productMapper.toProductDto(product))
-                .orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
+        String code = productDto.getCodeProduct();
+        if(code==null){
+            log.info("code null..please enter code");
+        }
+        Product prod = this.productRepository.findByCodeProduct(code);
+        if (prod == null) {
+            prod = this.productMapper.toProduct(productDto);
+            this.productRepository.save(prod);
+            return productDto;
+        }
+        prod.setQuantity(prod.getId() != null ? Integer.sum(prod.getQuantity(), productDto.getQuantity()) : prod.getQuantity());
+        return  this.productMapper.toProductDto(this.productRepository.save(prod));
     }
 
+    //delete all product with this codeProduct
+    @Override
+    @Transactional
     public ProductDto deleteProduct(String codeProduct) {
         return Optional.ofNullable(codeProduct)
                 .filter(StringUtils::isNotBlank)
                 .map(code -> this.productRepository.findByCodeProduct(code))
-                 .filter(Objects::nonNull)
+                 .filter(obj -> true)
                 .map(product -> {
                     if (product != null) this.productRepository.delete(product);
                     return this.productMapper.toProductDto(product);
@@ -93,36 +88,37 @@ public class ProductServiceImpl implements ProductService {
                .orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
     }
 
+    //update all field of product but creating new product
+    //with the same codeProduct
     @Override
     @Transactional
     public ProductDto updateProduct(ProductDto productDto) {
-        return Optional.ofNullable(productDto.getCodeProduct())
-                .filter(StringUtils::isNotBlank)
-                .map(code -> this.productRepository.findByCodeProduct(code))
-                .filter(Objects::nonNull)
-                .map(product -> {
-                    product.setCodeProduct(productDto.getCodeProduct());
-                    product.setDescription(productDto.getDescription());
-                    product.setName(productDto.getName());
-                    product.setPrice(productDto.getPrice());
-                    product.setQuantity(productDto.getQuantity());
-                    return product;
-                })
-                .map(product -> {
-                    log.info(" product : " + product);
-                    return  this.productRepository.save(product);
-                })
-                .map(product -> this.productMapper.toProductDto(product))
-                .orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
-    }
+        String code = productDto.getCodeProduct();
+        if(code!=null){
+            log.info("code null..please enter code");
+        }
+        Product product = this.productRepository.findByCodeProduct(code);
+        if (product == null) {
+            product = this.productMapper.toProduct(productDto);
+            this.productRepository.save(product);
+            return productDto;
+        }
+        product.setCodeProduct(productDto.getCodeProduct());
+        product.setDescription(productDto.getDescription());
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setQuantity(productDto.getQuantity());
+        return  this.productMapper.toProductDto(this.productRepository.save(product));
+      }
 
+      //update only quantity done by event
     @Override
     @Transactional
     public ProductDto updateProductQuantity(OrderProductDto orderProductDto) {
         return Optional.ofNullable(orderProductDto.getCodeProduct())
                 .filter(StringUtils::isNotBlank)
                 .map(code -> this.productRepository.findByCodeProduct(code))
-                .filter(Objects::nonNull)
+                .filter(obj -> true)
                 .map(product -> {
                     product.setQuantity((product.getQuantity() - orderProductDto.getQuantity()));
                     return product;
@@ -130,7 +126,7 @@ public class ProductServiceImpl implements ProductService {
                 .map(product -> {
                     return  this.productRepository.save(product);
                 })
-                .map(product -> this.productMapper.toProductDto(product))
+                .map(this.productMapper::toProductDto)
                 .orElseThrow(() -> new ProductNotFoundException("code Product not found. ", -1));
     }
 
