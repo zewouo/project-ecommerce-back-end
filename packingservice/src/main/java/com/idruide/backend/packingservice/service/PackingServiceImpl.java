@@ -118,6 +118,9 @@ public class PackingServiceImpl implements PackingService {
     @Transactional
     public PackingDto savePacking(PackingDto packingDto) {
         Order order = this.orderRepository.findByOrderNumber(packingDto.getOrderNumber());
+        if(order==null){
+            log.warn(" savePacking : OrderNumber not found..impossible to save packing slip");
+        }
         Packing packing = this.packingMapper.toPacking(packingDto);
         packing.setOrder(order);
         return this.packingMapper.toPackingDto(this.packingRepository.save(packing));
@@ -140,7 +143,7 @@ public class PackingServiceImpl implements PackingService {
                     if (packing != null) this.packingRepository.delete(packing);
                     return this.packingMapper.toPackingDto(packing);
                 })
-                .findFirst().orElseThrow(() -> new PackingNotFoundException("packing code not found. ", -1));
+                .findFirst().orElseThrow(() -> new PackingNotFoundException("deletePacking : packing code not found. ", -1));
     }
 
 }

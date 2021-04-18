@@ -1,4 +1,4 @@
-package com.idruide.backend.packingservice.kafka;
+package com.idruide.backend.packingservice.listener.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.idruide.backend.packingservice.dto.OrderDto;
@@ -21,15 +21,16 @@ public class KafkaPackingConsumer {
     @KafkaListener(topics = "topicdelivery")
     public void getMessage(String message) throws JsonProcessingException {
         OrderDto order = PackingXmlParser.getXmlMapper().readValue(message, OrderDto.class);
-
-        PackingDto packingDto = PackingDto.builder().createdAt(order.getCreatedAt())
+               log.info("Order receive from orderservice : " + order );
+       PackingDto packingDto = PackingDto.builder().createdAt(order.getCreatedAt())
                 .deliverDate(order.getDeliverDate())
                 .codePacking(RandomStringUtils.randomAlphanumeric(8).toUpperCase())
                 .comment("Automatic delivery")
                 .orderNumber(order.getOrderNumber())
                 .build();
         this.packingService.savePacking(packingDto);
-        log.info("Created Packing from order N.: " + packingDto.getOrderNumber() + " in Packing service");
+        log.info("Created Packing with event from order N.: " + packingDto.getOrderNumber() + " in Packing service");
+
 
     }
 }

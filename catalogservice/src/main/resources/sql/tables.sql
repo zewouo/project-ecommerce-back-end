@@ -2,7 +2,7 @@ CREATE DATABASE  idrivedb;
 
 use idrivedb;
 
-/*the owner of the table is catalogservice*/
+
 CREATE TABLE product_t (
   product_id int NOT NULL AUTO_INCREMENT,
   code_product varchar(255) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE product_t (
   PRIMARY KEY (product_id)
 );
 
-/*the owner of the table is orderservice*/
+
 CREATE TABLE order_t (
   order_id int NOT NULL AUTO_INCREMENT,
   address varchar(255) NOT NULL,
@@ -24,12 +24,13 @@ CREATE TABLE order_t (
   shipped bit(1) DEFAULT NULL,
   total_price int DEFAULT NULL,
   PRIMARY KEY (order_id)
-); 
+);
 
-/*the owner of the table is packingservice*/
+
 CREATE TABLE packing_t (
   packing_id int NOT NULL AUTO_INCREMENT,
   code_packing varchar(255) NOT NULL,
+  code varchar(255) NOT NULL,
   comment varchar(255) NOT NULL,
   created_at datetime(6) NOT NULL,
   deliver_date datetime(6) NOT NULL,
@@ -39,7 +40,7 @@ CREATE TABLE packing_t (
   CONSTRAINT forein_key_order_t FOREIGN KEY (order_id) REFERENCES order_t (order_id)
 );
 
-/*relationship between order and product*/
+
 CREATE TABLE order_product_t (
   order_number varchar(255) NOT NULL,
   quantity int NOT NULL,

@@ -44,7 +44,7 @@ public class Order implements Serializable {
     @Column(name = "deliver_date")
     private LocalDateTime deliverDate;
 
-    @Column(name = "address")
+    @Column(name = "address",nullable = false)
     private String address;
 
     @Fetch(FetchMode.JOIN)

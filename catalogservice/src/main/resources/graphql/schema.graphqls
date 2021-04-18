@@ -12,14 +12,14 @@ type ProductDto {
     codeProduct: String!
     name: String!
     price: Int!
-    description: String!
+    description: String
     quantity: Int!
 }
 input ProductInput {
     codeProduct: String!
     name: String!
     price: Int!
-    description: String!
+    description: String
     quantity: Int!
 
 }
@@ -32,9 +32,9 @@ type Query {
 }
 
 type Mutation {
-    createProduct(productInput: ProductInput!): ProductDto!
-    updateProduct(productInput: ProductInput!): ProductDto!
-    deleteProduct(codeProduct: String!) : ProductDto!
+    createProduct(productInput: ProductInput!): ProductDto
+    updateProduct(productInput: ProductInput!): ProductDto
+    deleteProduct(codeProduct: String!) : ProductDto
 }
 
 
