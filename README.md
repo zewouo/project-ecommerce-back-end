@@ -2,7 +2,7 @@
 
 Technical Exercise Back-end for IDruide
 
-**To launch the application follow the steps below:**
+- **To launch the application follow the steps below:**
 
 **1.  prerequisite to install:**
 
@@ -35,15 +35,19 @@ Technical Exercise Back-end for IDruide
 
 **6. please Wait until all microservices and kafka services are completely launch**
 
+- **To Test the application follow the steps below:**
 
 **7. open postman and use these urls for testing or
-   use browser with graphiql (http://localhost:10555/graphiql)**
-
+   use browser with graphiql:
+   
+    (http://localhost:10555/graphiql)
+    (http://localhost:10444/graphiql)
+    (http://localhost:10333/graphiql)
 
 ```
--     http://localhost:10555/catalog  for catalogservice
--     http://localhost:10444/order    for orderservice
--     http://localhost:10333/packing  for packingservice
+-     (http://localhost:10555/catalog) for catalogservice
+-     [text](http://localhost:10444/order )   for orderservice
+-     [text](http://localhost:10333/packing ) for packingservice
 ```
 
 
