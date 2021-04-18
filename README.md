@@ -7,9 +7,11 @@ Technical Exercise Back-end for IDruide
 
 **1.  prerequisite to install:**
 
-   Docker
-   Maven
-   java 8
+
+-  Docker
+-  Maven
+-  java 8
+
 
 **2. initial directory**
 
@@ -23,9 +25,10 @@ Technical Exercise Back-end for IDruide
 **4. Build project.**
   Creation of application JARs
 
-   mvn clean install -f catalogservice/pom.xml
-   mvn clean install -f orderservice/pom.xml
-   mvn clean install -f packingservice/pom.xml
+-    mvn clean install -f catalogservice/pom.xml
+-    mvn clean install -f orderservice/pom.xml
+-    mvn clean install -f packingservice/pom.xml
+
 
 **5. launch docker compose in the main directory:**
 
@@ -38,9 +41,11 @@ Technical Exercise Back-end for IDruide
    use browser with graphiql (http://localhost:10555/graphiql)**
 
 
-   http://localhost:10555/catalog for catalogservice
-   http://localhost:10444/order   for orderservice
-   http://localhost:10333/packing for packingservice
+_-    http://localhost:10555/catalog for catalogservice
+-    http://localhost:10444/order   for orderservice
+-    http://localhost:10333/packing for packingservice_
+
+
 
 **8. You can use the test sets found in the directory**
 
