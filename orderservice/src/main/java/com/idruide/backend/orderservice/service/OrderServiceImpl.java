@@ -1,4 +1,4 @@
-package com.idruide.backend.orderservice.service.order;
+package com.idruide.backend.orderservice.service;
 
 
 import com.idruide.backend.orderservice.dto.OrderDto;

@@ -36,13 +36,13 @@ public class Order implements Serializable {
     @Column(name = "shipped")
     private Boolean shipped;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "deliver_date")
+    @Column(name = "deliver_date",nullable = false)
     private LocalDateTime deliverDate;
 
-    @Column(name = "address")
+    @Column(name = "address",nullable = false)
     private String address;
 
     @OneToMany(targetEntity = OrderProduct.class,

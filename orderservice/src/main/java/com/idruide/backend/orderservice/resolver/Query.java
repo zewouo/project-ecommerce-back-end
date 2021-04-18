@@ -2,7 +2,7 @@ package com.idruide.backend.orderservice.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.idruide.backend.orderservice.dto.OrderDto;
-import com.idruide.backend.orderservice.service.order.OrderService;
+import com.idruide.backend.orderservice.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

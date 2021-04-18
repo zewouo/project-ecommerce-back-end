@@ -7,7 +7,7 @@ schema {
 type PackingDto {
     codePacking:String!
     deliverDate:String!
-    comment:String!
+    comment:String
     createdAt:String!
     orderNumber:String!
 }
@@ -29,14 +29,14 @@ type ProductDto {
 }
 
 type Query {
-    getAllPackings: [PackingDto!]!
-    getPackingByCode(codePacking:String!): PackingDto!
-    getPackingSlipDetails(codePacking: String!):[ProductDto!]!
+    getAllPackings: [PackingDto!]
+    getPackingByCode(codePacking:String!): PackingDto
+    getPackingSlipDetails(codePacking: String!):[ProductDto!]
 }
 
 # ---Mutation
 type Mutation {
-    createPacking(packingInput:PackingInput!): PackingDto!
-    updatePacking(packingInput:PackingInput): PackingDto!
-    deletePacking(packingInput:PackingInput): PackingDto!
+    createPacking(packingInput:PackingInput!): PackingDto
+    updatePacking(packingInput:PackingInput): PackingDto
+    deletePacking(packingInput:PackingInput): PackingDto
 }

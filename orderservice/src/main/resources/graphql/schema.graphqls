@@ -11,7 +11,7 @@ type OrderDto {
     costumerName: String!
     shipped: Boolean
     createdAt: String!
-    deliverDate:String
+    deliverDate:String!
     address: String!
     orderProducts: [OrderProductDto!]
 }
@@ -36,7 +36,7 @@ input OrderProductInput {
 # ---
 
 type Query {
-    getAllOrders:[OrderDto!]!
+    getAllOrders:[OrderDto!]
     getOrderById(orderId:ID!): OrderDto
 }
 
