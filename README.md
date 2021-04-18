@@ -2,16 +2,13 @@
 
 Technical Exercise Back-end for IDruide
 
-
 **To launch the application follow the steps below:**
 
 **1.  prerequisite to install:**
 
-
 -  Docker
 -  Maven
 -  java 8
-
 
 **2. initial directory**
 
@@ -19,15 +16,17 @@ Technical Exercise Back-end for IDruide
 
 **3. Go to the main directory and create the network**
 
-   docker network create networkIdruide
+   `docker network create networkIdruide`
 
- 
 **4. Build project.**
   Creation of application JARs
 
+```
 -    mvn clean install -f catalogservice/pom.xml
 -    mvn clean install -f orderservice/pom.xml
 -    mvn clean install -f packingservice/pom.xml
+```
+
 
 
 **5. launch docker compose in the main directory:**
@@ -41,20 +40,48 @@ Technical Exercise Back-end for IDruide
    use browser with graphiql (http://localhost:10555/graphiql)**
 
 
-_-    http://localhost:10555/catalog for catalogservice
--    http://localhost:10444/order   for orderservice
--    http://localhost:10333/packing for packingservice_
-
+```
+-     http://localhost:10555/catalog  for catalogservice
+-     http://localhost:10444/order    for orderservice
+-     http://localhost:10333/packing  for packingservice
+```
 
 
 **8. You can use the test sets found in the directory**
 
      /backend/posmanTests
 
-
-**9. To lauch kubernetes,please use files .yml in folder k8s**
+**9. To lauch kubernetes, and Deploy DB and services please use files .yaml in folder k8s**
    Follow these steps:
    
-9.0 please install minikube and kubectl
-9.1 you can change the replicas set in file *.yml
-    
+-  please install minikube and kubectl
+-  you can change the replicas set in file *.yml
+-  open an terminal and do 
+```
+      minikube stop
+      minikube delete
+      minikube start
+      minikube ip (this ip will be use after)
+      kubectl create -f mysql-service-service.yaml,mysql-service-deployment.yaml
+      ,catalog-service-pod.yaml,catalog-service-service.yaml
+      ,packing-service-pod.yaml,packing-service-service.yaml
+      ,order-service-pod.yaml,order-service-service.yaml
+      ,kafka-service.yaml,kafka-deployment.yaml
+      ,zookeeper-service.yaml,zookeeper-deployment.yaml
+      ,kafka-claim0-persistentvolumeclaim.yaml
+      ,networkIdruide-networkpolicy.yaml
+```
+   After to check do:
+```
+- kubectl get configmaps
+- kubectl get pods
+- kubectl get services
+- kubectl get deployments
+```
+
+
+
+
+
+
+   
