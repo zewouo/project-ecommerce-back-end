@@ -1,7 +1,5 @@
 # Project eCommerce Back-end 
 
-Technical Exercise Back-end for IDruide
-
  **A. To launch the application follow the steps below:**
 
    **1.  prerequisite to install:**
