@@ -22,17 +22,17 @@ Technical Exercise Back-end for IDruide
       -    mvn clean install -f orderservice/pom.xml
       -    mvn clean install -f packingservice/pom.xml   
 
-   **4. Go to the main directory and create the network: networkIdruide**
+   **4. From  main directory  create the network: networkIdruide**
 
        docker network create networkIdruide
 
-   **5. launch docker compose in  main directory:**
+   **5. From main directory launch docker-compose: **
 
       docker-compose up
 
    **6. please Wait until all microservices and kafka services are completely launch**
 
-    You can now begin test by open postman or chrome browser
+     You can now begin test by open postman or chrome browser
 
 
  **B. To Test  application follow the steps below:**
@@ -45,20 +45,38 @@ Technical Exercise Back-end for IDruide
   -   http://localhost:10333/graphiql for access to packingservice
       
       
-  Open postman and use these urls for testing
+  Open postman (please use Postman v8.2.3) and use these urls for testing
 
      
-  -  http://localhost:10555/catalog for catalogservice
-  -  http://localhost:10444/order    for orderservice
-  -  http://localhost:10333/packing  for packingservice
+  -  http://localhost:10555/catalog  for catalogservice  (catalog API)
+  -  http://localhost:10444/order    for orderservice     (order API)
+  -  http://localhost:10333/packing  for packingservice   (packing API)
       
 
 
   You can use the test sets found in the directory
 
         /backend/posmanTests
+   
+   Please change the imput parameter on API method call.
 
-      
+   To play with application please insert products in the DB by using catalog API and this following method:
+
+   ```
+      mutation {
+         createProduct(productInput:{name:"BMW motor and belts",codeProduct:"12345678",
+         price:2000,description:"new factory",quantity:400}){
+         codeProduct
+         name
+         price
+         description
+         quantity
+      }
+
+      } 
+         
+   ```
+
 
 **C. To lauch kubernetes, and Deploy DB or services please use files .yaml in folder k8s**
 
@@ -91,9 +109,9 @@ Technical Exercise Back-end for IDruide
       kubectl get services
       kubectl get deployments
 ```
-you will see all services and deployments done.
+If all step above are well done , you will see all services and deployments done.
 
-In order to test your deployment,use the ip (ex:192.168.49.2) in chome browser.
+In order to test your deployment,use the ip (ex:192.168.49.2) you have got in the past in chrome browser.
 
 
 
