@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 
@@ -15,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class MapConf {
 
     @Bean
-    ProductMapper getMapper(){
+    ProductMapper getMapper() {
         return Mappers.getMapper(ProductMapper.class);
     }
 

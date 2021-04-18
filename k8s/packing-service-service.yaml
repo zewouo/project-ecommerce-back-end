@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\Minikube\kompose.exe convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: packing-service
+  name: packing-service
+spec:
+  ports:
+  - name: "10333"
+    port: 10333
+    targetPort: 7000
+  selector:
+    io.kompose.service: packing-service
+status:
+  loadBalancer: {}

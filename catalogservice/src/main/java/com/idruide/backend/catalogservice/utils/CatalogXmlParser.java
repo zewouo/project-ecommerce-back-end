@@ -7,11 +7,13 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-
+/**
+ * @author Thierry Kwekam
+ */
 public class CatalogXmlParser {
 
+    private static final XmlMapper xmlMapper = new XmlMapper();
 
-    private static XmlMapper xmlMapper = new XmlMapper();
     static {
         xmlMapper.registerModule(new JSR310Module());
         xmlMapper.registerModule(new JavaTimeModule());
@@ -19,14 +21,10 @@ public class CatalogXmlParser {
     }
 
     public static XmlMapper getXmlMapper() {
-       xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-       xmlMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+        xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        xmlMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 
         return xmlMapper;
     }
-
-
-
-
 
 }

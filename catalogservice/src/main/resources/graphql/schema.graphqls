@@ -9,33 +9,32 @@ schema {
 # ---
 
 type ProductDto {
-    id: ID!
+    codeProduct: String!
     name: String!
     price: Int!
     description: String
-    amount: Int!
-    quantity: Int
+    quantity: Int!
 }
 input ProductInput {
-
+    codeProduct: String!
     name: String!
     price: Int!
     description: String
-    amount: Int!
-}
+    quantity: Int!
 
+}
 
 type Query {
     # Fetch All Products
-    getAllProducts : [ProductDto!]!
-    getProductById(productId: ID!): ProductDto
+    getAllProducts : [ProductDto!]
+    getProductByCode(codeProduct: String!): ProductDto
     getProductByName(productName: String!): ProductDto
 }
 
 type Mutation {
-    createProduct(productDto: ProductInput!): ProductDto!
-    updateProduct(productDto: ProductInput!): ProductDto!
-    deleteProduct(productId: ID!): ProductDto!
+    createProduct(productInput: ProductInput!): ProductDto
+    updateProduct(productInput: ProductInput!): ProductDto
+    deleteProduct(codeProduct: String!) : ProductDto
 }
 
 

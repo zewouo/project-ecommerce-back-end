@@ -2,7 +2,7 @@ package com.idruide.backend.orderservice.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.idruide.backend.orderservice.dto.OrderDto;
-import com.idruide.backend.orderservice.service.order.OrderService;
+import com.idruide.backend.orderservice.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,14 +10,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- *
- *
  * @author Thierry Kwekam
  */
 @Component
 @Slf4j
 public class Query implements GraphQLQueryResolver {
-
 
     private OrderService orderService;
 
@@ -32,8 +29,7 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public OrderDto getOrderById(Integer orderId) {
-        log.info("Get Order By Id " + orderId);
-        return orderService.validateAndGetOrderById(orderId);
+        return orderService.getOrderById(orderId);
     }
 
 }

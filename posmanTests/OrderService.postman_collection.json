@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "ed07ad2e-780f-498c-951e-c3611c5fd413",
+		"name": "OrderService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\r\ncreateOrder(orderInput:{totalPrice:326,shipped:true,address:\"boulevard honoré tesseire\", \r\n  costumerName:\"tita\",orderProducts:[{codeProduct:\"27727242\",quantity:7},{codeProduct:\"68361005\",quantity:20}]}){\r\n  \r\n  totalPrice\r\n  costumerName\r\n  orderNumber\r\n      \r\n}\r\n}\r\n  ",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8500/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8500",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\r\nupdateOrder(orderInput:{id:2,totalPrice:1800,createdAt:\"14-05-2020\",deliverDate:\"28-05-2021\", productDtos: [{id:7,name:\"wheel BMW\",price:5000,description:\"ok the type of whee\",amount:4},{id:2,name:\"wheel BMW\",price:5000,description:\"ok the type of whee\",amount:4}]}){\r\n  \r\n    id\r\n    totalPrice\r\n    createdAt\r\n    deliverDate\r\n    productDtos {\r\n       name \r\n    }\r\n}\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\r\ndeleteOrder(orderId:8){\r\n\r\n    id\r\n    totalPrice\r\n    createdAt   \r\n}\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "deleteOrder",
+					"host": [
+						"deleteOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addOrderProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\r\naddOrderProduct(orderId:11,productInput:{id:4,name:\"wheel BMW\",price:5000,description:\"ok the type of whee\",amount:4}){\r\n\r\n    id\r\n    totalPrice\r\n    createdAt   \r\n}\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllOrders",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\r\ngetAllOrders{\r\n\r\n  orderNumber\r\n  totalPrice\r\n  costumerName\r\n  createdAt\r\n  shipped\r\n  orderProducts{\r\n    codeProduct\r\n    quantity\r\n  }\r\n  }\r\n}\r\n\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8500/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8500",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrderById",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n  getOrderById(orderId:11){\r\n      id\r\n     totalPrice\r\n    createdAt\r\n    deliverDate\r\n  }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

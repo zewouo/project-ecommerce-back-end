@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  name: networkIdruide
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          io.kompose.network/networkIdruide: "true"
+  podSelector:
+    matchLabels:
+      io.kompose.network/networkIdruide: "true"
